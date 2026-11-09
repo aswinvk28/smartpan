@@ -1,0 +1,5 @@
+use_block_size: true
+block_size: 200
+post_block_size:
+  size: 60
+  history: 30

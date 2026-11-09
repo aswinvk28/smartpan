@@ -1,0 +1,9 @@
+#account_settings.account:
+#  path: '/account'
+#  defaults:
+#    _content: 'SmartPan\Bundles\CustomerBundle\Controller\AccountPageController::accountSettings'
+#    _title: 'Account Settings'
+#  requirements:
+#    _access: 'TRUE'
+#    methods: 'GET'
+#    _user_is_logged_in: 'TRUE'

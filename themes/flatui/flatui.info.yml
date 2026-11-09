@@ -1,0 +1,21 @@
+name: SmartPan Flat UI Custom
+type: theme
+description: 'Customized theme'
+package: Core
+version: VERSION
+core: 8.x
+regions:
+  header: 'Header'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  highlighted: Highlighted
+  content: Content
+  sidebar: 'Sidebar'
+  notice: 'Notice'
+  information: 'Information'
+  help: 'Help'
+  sidebar_mini: 'Sidebar Mini'
+  footer: Footer
+settings:
+  shortcut_module_link: '0'
+  clear_registry: '0'

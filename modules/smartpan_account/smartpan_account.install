@@ -1,0 +1,67 @@
+<?php
+
+function smartpan_account_install() {
+    $freeMember = entity_create('user_role', array(
+        'id' => 'freemember',
+        'label' => 'Free Member User',
+        'weight' => 3
+    ));
+    $freeMember->save();
+    
+    $basicMember = entity_create('user_role', array(
+        'id' => 'basicmember',
+        'label' => 'Basic Member User',
+        'weight' => 4
+    ));
+    $basicMember->save();
+    
+    $normalMember = entity_create('user_role', array(
+        'id' => 'normalmember',
+        'label' => 'Normal Member User',
+        'weight' => 5
+    ));
+    $normalMember->save();
+    
+    $premiumMember = entity_create('user_role', array(
+        'id' => 'premiummember',
+        'label' => 'Premium Member User',
+        'weight' => 6
+    ));
+    $premiumMember->save();
+}
+
+function smartpan_install_menu() {
+    $path = drupal_get_path('module', 'smartpan');
+    $accountMenuConfig = \Symfony\Component\Yaml\Yaml::parse($path . '/config/system.menu.account_holder.yml');
+    $nonAccountMenuConfig = \Symfony\Component\Yaml\Yaml::parse($path . '/config/system.menu.nonaccount.yml');
+    
+    $accountMenu = entity_create('menu', $accountMenuConfig);
+    $accountMenu->save();
+    $nonAccountMenu = entity_create('menu', $nonAccountMenuConfig);
+    $nonAccountMenu->save();
+}
+
+function smartpan_account_uninstall() {
+    \Drupal::config('user.role.freemember')
+    ->set('id', 'freemember')
+    ->delete();
+    
+    \Drupal::config('user.role.basicmember')
+    ->set('id', 'basicmember')
+    ->delete();
+    
+    \Drupal::config('user.role.normalmember')
+    ->set('id', 'normalmember')
+    ->delete();
+    
+    \Drupal::config('user.role.premiummember')
+    ->set('id', 'premiummember')
+    ->delete();
+    
+    $accountMenu = entity_load('menu', 'account_holder');
+    $accountMenu->delete();
+    $nonAccountMenu = entity_load('menu', 'nonaccount');
+    $nonAccountMenu->delete();
+}
+
+?>

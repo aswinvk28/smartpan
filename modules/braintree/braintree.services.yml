@@ -1,0 +1,11 @@
+services:
+  braintree_account:
+    class: 'Drupal\braintree\BraintreeAccount'
+    arguments: ['@settings']
+  payment.gateway:
+    class: 'Drupal\braintree\Factory\GatewayFactoryInterface'
+    factory_service: payment.gateway_factory
+    factory_method: getPaymentGateway
+  payment.gateway_factory:
+    class: 'Drupal\braintree\Factory\PaymentGatewayFactory'
+    arguments: ['@braintree_account']

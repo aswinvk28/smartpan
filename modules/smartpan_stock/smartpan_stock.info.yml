@@ -1,0 +1,9 @@
+name: Smartpan Stock
+type: module
+description: 'Enables Stock Feature for Smartpan'
+package: Smartpan_Stock
+version: VERSION
+dependencies:
+  - memcache
+  - user_subscription
+core: 8.x

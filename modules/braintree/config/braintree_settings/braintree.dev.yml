@@ -1,0 +1,8 @@
+braintree:
+  smartpan_dev:
+    account_name: 'dev'
+    environment: 'development'
+    merchant_id: ''
+    public_key: ''
+    private_key: ''
+    cse_key: ''

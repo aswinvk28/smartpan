@@ -1,0 +1,24 @@
+<?php
+
+function product_subscription_duration_interval_mapper($duration) {
+    $durationMap = array(
+        'month' => 'M',
+        'day' => 'D'
+    );
+    return $durationMap[$duration];
+}
+
+/**
+ * Implements hook_menu_link_defaults().
+ */
+function product_subscription_menu_link_defaults() {
+  $links['product_subscription.admin.plan_overview'] = array(
+    'link_title' => 'Manage Plans',
+    'description' => "Management of Plans.",
+    'parent' => 'system.admin',
+    'route_name' => 'product_subscription.plan_overview',
+  );
+  return $links;
+}
+
+?>

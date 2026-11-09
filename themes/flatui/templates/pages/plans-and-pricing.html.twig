@@ -1,0 +1,27 @@
+<div class="row-fluid column">
+    
+    {%- for plan in plans -%}
+    <div {{ plan.attributes }}>
+        <div class="plan-header">
+            <h4>{{ plan.title }}</h4>
+        </div>
+        <div class="plan-price">
+            <h3>
+                {%- if plan.price == 0 -%} 
+                Free Trial
+                {%- else -%} 
+                {{ plan.price }}
+                {%- endif -%}
+            </h3>
+            <p>{{ plan.duration }}</p>
+        </div>
+        <div class="plan-features">
+            {{ plan.features_html }}
+        </div>
+        <div class="plan-foot">
+            {{ plan.button }}
+        </div>
+    </div>
+    {%- endfor -%}
+    
+</div>

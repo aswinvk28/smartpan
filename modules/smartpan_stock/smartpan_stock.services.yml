@@ -1,0 +1,23 @@
+services:
+  stock.database_controller:
+    class: Drupal\smartpan_stock\Controller\StockDBController
+    arguments: ['@database']
+  stock.cron_manager:
+    class: Smartpan\Bundles\StockBundle\Manager\StockCronManager
+    arguments: ['@config', '@module_handler']
+    calls:
+      - [setCronService, ['@stock.yahoo.cron']]
+      - [setSizeCronManager, ['@stock.size_manager.cron']]
+      - [setHistoryCronManager, ['@stock.history_manager.cron']]
+  stock.yahoo.cron:
+    class: Drupal\smartpan_stock\Crawler\YahooCronService
+    arguments: ['@database', '@stock.cron_manager']
+  stock.size_manager.cron:
+    class: Drupal\smartpan_stock\Crawler\StockSizeCronManager
+    arguments: ['@stock.yahoo.cron']
+  stock.history_manager.cron:
+    class: Drupal\smartpan_stock\Crawler\StockHistoryCronManager
+    arguments: ['@stock.yahoo.cron']
+  memcache.stock_controller:
+    class: SmartPan\Bundles\CacheBundle\Controller\StockCacheController
+    arguments: ['@memcache.factory', '@entity.manager', '@stock.database_controller']

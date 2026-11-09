@@ -1,0 +1,15 @@
+<li class="four columns">
+  {%- if (content.field_image) -%}
+    <div class="preloader">
+        <a href="{%- file_create_url(node.field_image['und'][0]['uri']) -%}" class="bwWrapper single-image plus-icon" rel="jcarousel"> 
+            <img src="{%- file_create_url(node.field_image.und[0].uri) -%}" alt="" />
+        </a>
+    </div>
+  {%- endif -%}
+    <a href="{{ node_url }}" class="project-meta">
+        <h6 class="title">{{ title }}</h6>
+        <span class="categories">
+            {{ content_category }}
+        </span>
+    </a>
+</li>

@@ -1,0 +1,23 @@
+{%- if rest_links -%}
+    <div class="clearfix decolumn_mini">
+        <ul class="nav nav-pills pull-left">
+            {% for rest_link in rest_links %}
+            <li class=""><a class="nounderline" href="{{ rest_link.href }}">{{ rest_link.title }}</a></li>
+            {% endfor %}
+        </ul>
+        <ul class="nav nav-pills pull-right">
+            {%- if secondary_menu -%}
+                {%- if account_links -%}
+                    {% for account_link in account_links %}
+                    <li class=""><a class="nounderline" href="{{ account_link.href }}">{{ account_link.title }}</a></li>
+                    {% endfor %}
+                {%- endif -%}
+            <li>{{ secondary_menu }}</li>
+            {%- elseif non_account_links -%}
+                {% for non_account_link in non_account_links %}
+                <li><a class="btn btn-success" href="{{ non_account_link.href }}">{{ non_account_link.title }}</a></li>
+                {% endfor %}
+            {%- endif -%}
+        </ul>
+    </div>
+{%- endif -%}

@@ -1,0 +1,10 @@
+id: basicmember
+uuid: 1885de51-e112-47ff-b24b-75601ae067a3
+label: 'Basic Member User'
+weight: 4
+permissions:
+  - 'upgrade subscription'
+  - 'access dashboard'
+  - 'add payment method'
+status: true
+langcode: en

@@ -1,0 +1,8 @@
+vid: plan_types
+uuid: 2e60d696-2c1d-4e26-b423-3531fcb7ff08
+name: plan_types
+description: 'Plan Types'
+hierarchy: 0
+weight: 0
+status: true
+langcode: en

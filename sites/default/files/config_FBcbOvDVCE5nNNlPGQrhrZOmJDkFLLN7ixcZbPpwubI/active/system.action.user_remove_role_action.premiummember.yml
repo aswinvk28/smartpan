@@ -1,0 +1,9 @@
+id: user_remove_role_action.premiummember
+label: 'Remove the Premium Member User role from the selected users'
+uuid: 9de534c4-ff47-4aef-9101-1cc61b72d35c
+status: true
+langcode: en
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: premiummember

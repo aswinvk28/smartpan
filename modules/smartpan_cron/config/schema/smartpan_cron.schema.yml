@@ -1,0 +1,20 @@
+smartpan_cron.stock:
+  type: mapping
+  label: 'Smartpan Stock Cron settings'
+  mapping:
+    use_block_size:
+      type: boolean
+      label: 'Use Stock Symbol Fetch Block Size'
+    block_size:
+      type: integer
+      label: 'Stock Symbol Database Block Size'
+    post_block_size:
+      type: mapping
+      label: 'HTTP POST Symbols Block Size'
+      mapping:
+        size:
+          type: integer
+          label: 'Stock Size'
+        history:
+          type: integer
+          label: 'Stock History'

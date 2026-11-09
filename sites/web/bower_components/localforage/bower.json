@@ -1,0 +1,17 @@
+{
+    "name": "localforage",
+    "version": "0.1.1",
+    "main": [
+        "dist/localforage.min.js",
+        "dist/backbone.localforage.min.js"
+    ],
+    "ignore": [
+        ".travis.yml",
+        "CONTRIBUTING.md",
+        "LICENSE",
+        "test*",
+        "vendor/*"
+    ],
+    "dependencies": {},
+    "devDependencies": {}
+}

@@ -1,0 +1,263 @@
+<?php
+
+/**
+ * Implements hook_schema()
+ * @return array
+ */
+function user_subscription_schema() {
+    
+    $schema['smartpan_user'] = array(
+        'description' => 'Stores the details of users for the product',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'unsigned' => true,
+                'not null' => true),
+            'user_id' => array(
+                'type' => 'int',
+                'unsigned' => true,
+                'not null' => true),
+            'first_name' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => false,
+                'default' => NULL),
+            'last_name' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => false,
+                'default' => NULL),
+            'customer_id' => array(
+                'type' => 'varchar',
+                'length' => 32,
+                'not null' => false,
+                'default' => NULL),
+            'payment_token' => array(
+                'type' => 'varchar',
+                'length' => 64,
+                'not null' => false,
+                'default' => NULL),
+            'subscription_id' => array(
+                'type' => 'varchar',
+                'length' => 32,
+                'not null' => false,
+                'default' => NULL),
+            'billing_email' => array(
+                'description' => 'The email address of the customer.',
+                'type' => 'varchar',
+                'length' => 96,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_first_name' => array(
+                'description' => 'The first name of the person paying for the order.',
+                'type' => 'varchar',
+                'length' => 64,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_last_name' => array(
+                'description' => 'The last name of the person paying for the order.',
+                'type' => 'varchar',
+                'length' => 64,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_phone' => array(
+                'description' => 'The phone number for the billing address.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_company' => array(
+                'description' => 'The company of the billing address.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_street1' => array(
+                'description' => 'The street address where the bill will be sent.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_street2' => array(
+                'description' => 'The second line of the street address.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_city' => array(
+                'description' => 'The city where the bill will be sent.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_postal_code' => array(
+                'description' => 'The postal code where the bill will be sent.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => ''),
+            'billing_country' => array(
+                'description' => 'The country code where the bill will be sent.',
+                'type' => 'varchar',
+                'length' => 40,
+                'not null' => FALSE,
+                'default' => NULL)
+        ),
+        'foreign keys' => array(
+          'drupal_user' => array(
+            'table' => 'users',
+            'columns' => array('uid' => 'user_id')
+          )
+        ),
+        'primary key' => array('id'),
+        'unique keys' => array(
+          'user' => array('user_id')
+        )
+    );
+    
+    $schema['smartpan_subscription'] = array(
+        'description' => 'Stores subscriptions made.',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true, 
+                'description' => 'Primary Key: Unique subscription ID.',
+                'unsigned' => true),
+            'uuid' => array(
+                'description' => 'Unique Key: Universally unique identifier for this entity.',
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => FALSE,
+                'default' => NULL),
+            'plan_id' => array(
+                'type' => 'int',
+                'description' => 'The plan id for the subscription.',
+                'not null' => true,
+                'size' => 'tiny',
+                'unsigned' => true),
+            'user_id' => array(
+                'type' => 'int',
+                'description' => 'The user id of the member who has subscribed.',
+                'not null' => true,
+                'unsigned' => true),
+            'type' => array(
+                'type' => 'int',
+                'description' => 'The type of subscription: free-trial, basic, normal or premium',
+                'not null' => true,
+                'unsigned' => true,
+                'size' => 'tiny',
+                'default' => 0),
+            'bundle' => array(
+                'type' => 'char',
+                'description' => 'The bundle of subscription: free-trial, basic, normal or premium',
+                'not null' => true,
+                'length' => 20,
+                'default' => ''),
+            'status' => array(
+                'description' => 'Indicating the subscription status.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'default' => 0,
+                'size' => 'medium'),
+            'created' => array(
+                'type' => 'int',
+                'description' => 'A timestamp for creation of subscription.',
+                'not null' => true,
+                'unsigned' => true,
+                'default' => 0),
+            'validity' => array(
+                'type' => 'datetime',
+                'mysql_type' => 'datetime',
+                'description' => 'Date until which the subscription is valid.',
+                'not null' => FALSE,
+                'default' => NULL),
+            'renew' => array(
+                'type' => 'int',
+                'size' => 'tiny',
+                'description' => 'A boolean indicating the renewal of the subscription: auto-renewal or manual.',
+                'unsigned' => true,
+                'not null' => true,
+                'default' => 0)
+        ),
+        'indexes' => array(
+          'plan' => array('plan_id'),
+          'status' => array('status', 'renew'),
+          'type' => array('type'),
+          'bundle' => array('bundle'),
+          'date' => array('validity')
+        ),
+        'unique keys' => array(
+          'user' => array('user_id'),
+          'uuid' => array('uuid')
+        ),
+        'primary key' => array('id'),
+        'foreign keys' => array(
+          'plan' => array(
+            'table' => 'smartpan_plan',
+            'columns' => array('id' => 'plan_id')
+          ),
+          'user' => array(
+            'table' => 'smartpan_users',
+            'columns' => array('id', 'user_id')
+          )
+        )
+    );
+    
+    $schema['smartpan_subscription_history'] = array(
+        'description' => 'Stores the history of subscription',
+        'fields' => array(
+            'user_id' => array(
+                'type' => 'int',
+                'description' => 'The user id of the member who has subscribed.',
+                'not null' => true,
+                'unsigned' => true),
+            'subscription_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'current_plan_id' => array(
+                'type' => 'int',
+                'description' => 'The current plan id for the subscription.',
+                'not null' => true,
+                'size' => 'tiny',
+                'unsigned' => true),
+            'future_plan_id' => array(
+                'type' => 'int',
+                'description' => 'The future plan id for the subscription.',
+                'not null' => true,
+                'size' => 'tiny',
+                'unsigned' => true),
+            'expiry' => array(
+                'description' => 'The Unix timestamp indicating when the subscription expires.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' > true)
+        ),
+        'indexes' => array(
+          'subscription' => array('user_id', 'subscription_id', 'expiry'),
+          'expiry' => array('expiry')
+        ),
+        'foreign keys' => array(
+          'user' => array(
+            'table' => 'smartpan_user',
+            'columns' => array('id' => 'user_id')
+          ),
+          'subscription' => array(
+            'table' => 'smartpan_subscription',
+            'columns' => array('id', 'subscription_id')
+          ),
+          'current_plan' => array(
+              'table' => 'smartpan_plan',
+              'columns' => array('id', 'current_plan_id')
+          ),
+          'future_plan' => array(
+              'table' => 'smartpan_plan',
+              'columns' => array('id', 'future_plan_id')
+          )
+        )
+    );
+    
+    return $schema;
+}
+
+?>

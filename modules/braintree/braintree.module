@@ -1,0 +1,41 @@
+<?php
+
+function braintree_form_system_site_information_settings_alter(&$form, &$form_state) {
+    $form['braintree'] = array(
+        '#title' => 'Braintree Settings',
+        '#type' => 'fieldset',
+        '#collapsible' => true,
+        '#collapsed' => false
+    );
+    
+    $accounts = \Drupal::service('braintree_account')->getAccounts();
+    $keys = array_keys($accounts['braintree']);
+    $path = drupal_get_path('module', 'braintree') . '/config/braintree_settings';
+    $account = \Symfony\Component\Yaml\Yaml::parse($path . '/braintree.account.yml');
+    $options = array_combine($keys, $keys);
+    $form['braintree']['account_name'] = array(
+        '#title' => 'Account Name',
+        '#type' => 'select',
+        '#options' => $options,
+        '#empty_option' => 'None Selected',
+        '#empty_value' => '',
+        '#default_value' => $account['name'] ? $account['name'] : ''
+    );
+    
+    $form['#validate'][] = 'braintree_settings_form_validate';
+    $form['#submit'][] = 'braintree_settings_form_submit';
+}
+
+function braintree_settings_form_validate($form, &$form_state) {
+    if(!preg_match('/^[a-z\_]+$/', $form_state['values']['account_name'])) {
+        form_set_error('account_name', $form_state, 'Invalid Account Name. Account Name should only consist of lower case alphabets and underscores');
+    }
+}
+
+function braintree_settings_form_submit($form, &$form_state) {
+    \Drupal::config('braintree.account')
+    ->set('name', $form_state['values']['account_name'])
+    ->save();
+}
+
+?>

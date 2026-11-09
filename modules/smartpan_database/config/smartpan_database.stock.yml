@@ -1,0 +1,7 @@
+smartpan_database.stock:
+  partition_autodelete:
+    stock_size: false
+    stock_history: false
+    stock_investor: false
+    industry_rank: false
+    market_rank: false

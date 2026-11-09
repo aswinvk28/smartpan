@@ -1,0 +1,24 @@
+ul.autocomplete {
+    display: none;
+    position: absolute;
+    margin: 0;
+    padding: 4px 0 4px 8px;
+}
+ul.autocomplete li {
+    list-style: none;
+    margin: 0;
+    padding: 5px 7px;
+    font-size: 13px;
+}
+ul.autocomplete li.active, ul.autocomplete li:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+}
+ul.autocomplete li:hover a {
+    color: #000;
+}
+ul.autocomplete li a {
+    color: #fff;
+    text-decoration: none;
+}

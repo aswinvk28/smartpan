@@ -1,0 +1,106 @@
+<?php
+
+require_once __DIR__ . '/includes/subscription.php';
+require_once __DIR__ . '/includes/fields.php';
+require_once __DIR__ . '/includes/form.php';
+
+define('SMARTPAN_FREE_RID', 'freemember');
+define('SMARTPAN_BASIC_RID', 'basicmember');
+define('SMARTPAN_NORMAL_RID', 'normalmember');
+define('SMARTPAN_PREMIUM_RID', 'premiummember');
+
+define('SMARTPAN_FREE_PRICE', 0.00);
+
+/**
+ * Implements hook_permission()
+ * @return type
+ */
+function smartpan_account_permission() {
+    return array(
+        'access dashboard' =>  array(
+            'title' => t('Access Dashboard'),
+            'restrict access' => TRUE,
+            'description' => t('Gives access to the Dashboard page with relevant stock data')
+        ),
+        'administer braintree' => array(
+            'title' => t('Administer Braintree'),
+            'restrict access' => TRUE,
+            'description' => t('Gives permission to administer Braintree')
+        )
+    );
+}
+
+function smartpan_account_is_member($entity) {
+    return smartpan_account_is_free_member($entity) ||
+        smartpan_account_is_paid_member($entity);
+}
+
+function smartpan_account_is_free_member($entity) {
+    return $entity->hasRole(SMARTPAN_FREE_RID);
+}
+
+function smartpan_account_is_paid_member($entity) {
+    return $entity->hasRole(SMARTPAN_BASIC_RID) ||
+        $entity->hasRole(SMARTPAN_NORMAL_RID) ||
+        $entity->hasRole(SMARTPAN_PREMIUM_RID);
+}
+
+function smartpan_account_is_member_admin($entity) {
+    return smartpan_account_is_member($entity) ||
+        smartpan_account_is_admin($entity);
+}
+
+function smartpan_account_is_admin($entity) {
+    return $entity->hasRole('administrator');
+}
+
+function smartpan_account_members() {
+    static $memberRoles;
+    if(!isset($memberRoles)) {
+        $memberRoles = array(
+            SMARTPAN_FREE_RID, SMARTPAN_BASIC_RID, SMARTPAN_NORMAL_RID, SMARTPAN_PREMIUM_RID
+        );
+    }
+    return $memberRoles;
+}
+
+function smartpan_account_library_info() {
+    return array(
+        'appjs' => array(
+            'title' => 'App JS File',
+            'version' => \DRUPAL::VERSION,
+            'js' => array(
+                'sites/web/app.js' => array(
+                    'type' => 'file',
+                    'scope' => 'footer',
+                    'group' => JS_THEME,
+                    'cache' => TRUE,
+                    'every_page' => TRUE
+                )
+            ),
+            'dependencies' => array(
+                array('system', 'backbone')
+            )
+        )
+    );
+}
+
+/**
+ * Implements hook_menu_link_defaults().
+ */
+function smartpan_account_menu_link_defaults() {
+  $links['smartpan_account.dashboard'] = array(
+    'link_title' => 'Dashboard',
+    'route_name' => 'smartpan_account.dashboard',
+    'menu_name' => 'account_holder'
+  );
+  $links['smartpan_account.admin.braintree_plan'] = array(
+    'link_title' => 'Manage Braintree Plans',
+    'route_name' => 'smartpan_account.braintree_plan',
+    'description' => "Management of Braintree Plans.",
+    'parent' => 'system.admin'
+  );
+  return $links;
+}
+
+?>

@@ -1,0 +1,23 @@
+<?php
+
+function smartpan_notification_install() {
+    if(settings()->get('environment') == 'local') {
+        \Drupal::config('system.mail')
+        ->set('user', 'Drupal\smartpan_notification\Mail\SmartPanMail')
+        ->save();
+    } elseif(settings()->get('environment') == 'dev') {
+        \Drupal::config('system.mail')
+        ->set('user', 'Drupal\smartpan_notification\Mail\SmartPanMail')
+        ->save();
+    } elseif(settings()->get('environment') == 'qa') {
+        \Drupal::config('system.mail')
+        ->set('user', 'Drupal\smartpan_notification\Mail\SmartPanMail')
+        ->save();
+    } elseif(settings()->get('environment') == 'uat') {
+        
+    } elseif(settings()->get('environment') == 'production') {
+        
+    }
+}
+
+?>

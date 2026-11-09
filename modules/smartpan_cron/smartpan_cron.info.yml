@@ -1,0 +1,6 @@
+name: Smartpan Cron
+type: module
+description: 'Administration for Stock Parameters'
+package: Smartpan_Cron
+version: VERSION
+core: 8.x

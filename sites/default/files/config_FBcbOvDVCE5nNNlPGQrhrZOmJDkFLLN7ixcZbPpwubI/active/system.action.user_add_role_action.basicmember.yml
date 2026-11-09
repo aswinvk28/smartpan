@@ -1,0 +1,9 @@
+id: user_add_role_action.basicmember
+label: 'Add the Basic Member User role to the selected users'
+uuid: 42c60747-0b94-4371-a950-806ce46a0789
+status: true
+langcode: en
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: basicmember

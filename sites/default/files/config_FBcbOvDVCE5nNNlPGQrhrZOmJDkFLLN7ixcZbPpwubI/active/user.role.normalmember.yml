@@ -1,0 +1,10 @@
+id: normalmember
+uuid: 464ca8c4-0647-4f01-954a-74863c665d26
+label: 'Normal Member User'
+weight: 5
+permissions:
+  - 'upgrade subscription'
+  - 'access dashboard'
+  - 'add payment method'
+status: true
+langcode: en

@@ -1,0 +1,8 @@
+braintree:
+  smartpan_production:
+    account_name: 'smartpan_production'
+    environment: 'production'
+    merchant_id: 'zy45ff42dtc5v6qn'
+    public_key: 'fqdgr2qj7yb95k3v'
+    private_key: '820d2f448c1c483f3dd202abe50f2165'
+    cse_key: 'MIIBCgKCAQEA0c2ckNCuy05bPGOabPcEuDI9FE2Ng8S7W1Lkbe9zqcHYkLge4C4n55j3VZYxu472R5DgFLZcZo9WR/HTIXpkGzkkcRUUArZ/8putwrC5Bwp0VCRNN+ZeKZKxZ/pzRGk6Xpk0OtYrqMktan+DHnX5ybTLiTixw0vQGVXuPuoShIGriCTbNvi37rl1F71bh7yKK2rx8yMPjQunq9jxrEzkHEWr9vXUrV4ZLICO4fxebximh8+smmkILvrTZXizNlKM7rHooDEgwyS7ERd33X6Wazf02W8b1hBxNrU6blnCGFZwfseS1BUiTw4vu4b2H3zdqv3xfJcxjusdMYJ515DHvQIDAQAB'

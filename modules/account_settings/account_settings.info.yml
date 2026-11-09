@@ -1,0 +1,8 @@
+name: SmartPan Account Settings
+type: module
+description: 'Enables the modification of account features.'
+package: SmartPan
+dependencies:
+  - user_subscription
+version: VERSION
+core: 8.x

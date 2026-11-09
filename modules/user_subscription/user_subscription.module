@@ -1,0 +1,80 @@
+<?php
+
+use SmartPan\Bundles\AccountBundle\Controller\UserController;
+
+/**
+ * Implements hook_entity_info_alter()
+ * @param type $entity_info
+ */
+function user_subscription_entity_info_alter(&$entity_info) {
+    $entity_info['user']
+    ->setFormClass('subscribe', 'Drupal\user_subscription\Controller\AccountFormRegisterController')
+    ->setFormClass('default', 'Drupal\user_subscription\Form\SmartPanUserProfileController');
+}
+
+/**
+ * Implements hook_entity_delete
+ * @param type $entity
+ */
+function user_subscription_entity_delete($entity) {
+    if($entity->getEntityTypeId() == 'user') {
+        $smartpanUser = UserController::getSmartpanUserFromDrupalUser($entity);
+        if(!empty($smartpanUser)) {
+            $userController = new UserController();
+            $transaction = db_transaction();
+            try {
+                $userController->hardDelete($smartpanUser);
+                $smartpanUser->delete();
+            } catch(\Exception $e) {
+                $transaction->rollback();
+                drupal_set_message($e->getMessage(), 'error');
+            }
+        }
+    } elseif($entity->getEntityTypeId() == 'plan') {
+        $subscriptions = entity_load_multiple_by_properties('subscription', array(
+            'plan_id' => $entity->id(),
+            'status' => 1
+        ));
+
+        if(!empty($subscriptions)) {
+            $count = count($subscriptions);
+            $increment = 0;
+            foreach($subscriptions as $entityId => $subscription) {
+                $subscription->set('status', 0);
+                if($subscription->save()) {
+                    $increment++;
+                    watchdog('smartpan', 'Made Subscription %id inactive.', array('%id' => $subscription->id()), WATCHDOG_NOTICE);
+                }
+            }
+            if($increment != $count) {
+                drupal_set_message(t("Some of the $increment out of $count subscriptions could not be made inactive"));
+            }
+            drupal_set_message(t('The subscriptions under this plan has been made inactive.'), 'status');
+        }
+    }
+}
+
+function user_subscription_permission() {
+    return array(
+        'administer subscriptions' => array(
+            'title' => t('Administer Subscriptions'),
+            'restrict access' => TRUE,
+            'description' => t('Gives permission to administer Subscriptions')
+        )
+    );
+}
+
+/**
+ * Implements hook_menu_link_defaults().
+ */
+function user_subscription_menu_link_defaults() {
+  $links['user_subscription.admin.subscription_overview'] = array(
+    'link_title' => 'Manage Smartpan Subscriptions',
+    'route_name' => 'user_subscription.subscription_overview',
+    'description' => "Management of Smartpan Subscriptions.",
+    'parent' => 'system.admin'
+  );
+  return $links;
+}
+
+?>

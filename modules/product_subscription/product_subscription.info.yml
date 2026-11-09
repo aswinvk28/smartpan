@@ -1,0 +1,10 @@
+name: Product Subscription
+type: module
+description: 'Enables the Product for subscription by users'
+package: SmartPan
+version: VERSION
+dependencies: 
+  - smartpan_account
+  - braintree
+core: 8.x
+configure: product_subscription.plan_overview

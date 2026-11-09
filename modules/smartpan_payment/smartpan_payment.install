@@ -1,0 +1,278 @@
+<?php
+
+function smartpan_payment_schema() {
+    $schema['smartpan_order'] = array(
+        'description' => 'Stores orders placed',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'description' => 'Primary Key: Unique order ID.',
+                'unsigned' => true,
+                'not null' => true),
+            'uuid' => array(
+                'description' => 'Unique Key: Universally unique identifier for this entity.',
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => FALSE,
+                'default' => NULL),
+            'subscription_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'user_id' => array(
+                'description' => 'The user.uid of the member that placed the order.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE),
+            'status' => array(
+                'description' => 'Indicating the order status.',
+                'type' => 'int',
+                'size' => 'tiny',
+                'not null' => TRUE,
+                'default' => 0),
+            'order_total' => array(
+                'description' => 'The total amount to be paid for the order.',
+                'type' => 'numeric',
+                'precision' => 11,
+                'scale' => 5,
+                'not null' => TRUE,
+                'default' => 0.0),
+            'product' => array(
+                'description' => 'The product ID the order.',
+                'type' => 'int',
+                'not null' => FALSE,
+                'default' => NULL,
+                'size' => 'tiny'),
+            'type' => array(
+                'description' => 'The order type for the order.',
+                'type' => 'varchar',
+                'not null' => FALSE,
+                'length' => 20,
+                'default' => NULL),
+            'braintree_subscription_id' => array(
+                'description' => 'The braintree subscription ID.',
+                'type' => 'varchar',
+                'length' => 32,
+                'not null' => FALSE,
+                'default' => NULL),
+            'payment_method' => array(
+                'description' => 'The method of payment.',
+                'type' => 'varchar',
+                'length' => 32,
+                'not null' => TRUE,
+                'default' => ''),
+            'data' => array(
+                'description' => 'A serialized array of extra data.',
+                'type' => 'blob',
+                'not null' => FALSE,
+                'serialize' => TRUE,
+                'default' => NULL),
+            'created' => array(
+                'description' => 'The Unix timestamp indicating when the order was created.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' > true),
+            'modified' => array(
+                'description' => 'The Unix timestamp indicating when the order was last modified.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' > true),
+            'host' => array(
+                'description' => 'Host IP address of the person paying for the order.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => FALSE,
+                'default' => NULL),
+            'currency' => array(
+                'description' => 'The ISO currency code for the order.',
+                'type' => 'char',
+                'length' => 5,
+                'not null' => TRUE,
+                'default' => '')
+        ),
+        'indexes' => array(
+          'type' => array('subscription_id'),
+          'user' => array('user_id'),
+          'product' => array('status', 'product'),
+          'date' => array('created', 'modified'),
+          'order' => array('user_id', 'subscription_id'),
+          'currency' => array('currency')
+        ),
+        'unique keys' => array(
+          'uuid' => array('uuid')
+        ),
+        'primary key' => array('id'),
+        'foreign keys' => array(
+          'subscriptions' => array(
+            'table' => 'smartpan_subscription',
+            'columns' => array('id' => 'subscription_id')
+          ),
+          'users' => array(
+            'table' => 'smartpan_users',
+            'columns' => array('id' => 'user_id')
+          )
+        )
+    );
+    
+    $schema['smartpan_payment_receipt'] = array(
+        'description' => 'Stores completed payments.',
+        'fields' => array(
+          'id' => array(
+            'description' => 'Primary key: the payment receipt ID.',
+            'type' => 'serial',
+            'unsigned' => TRUE,
+            'not null' => TRUE),
+          'uuid' => array(
+            'description' => 'Unique Key: Universally unique identifier for this entity.',
+            'type' => 'varchar',
+            'length' => 128,
+            'not null' => FALSE,
+            'default' => NULL),
+          'order_id' => array(
+            'description' => 'The order_id for the payment.',
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE),
+          'method' => array(
+            'description' => 'The payment method.',
+            'type' => 'varchar',
+            'length' => 32,
+            'not null' => TRUE,
+            'default' => ''),
+          'amount' => array(
+            'description' => 'The payment amount in the store default currency.',
+            'type' => 'numeric',
+            'precision' => 11,
+            'scale' => 5,
+            'not null' => TRUE,
+            'default' => 0),
+          'user_id' => array(
+            'description' => 'The user id of the member to whom the payment receipt is issued',
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE),
+          'account_id' => array(
+            'description' => 'The payment account to which the amount has been paid.',
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE),
+          'data' => array(
+            'description' => 'A serialized array of extra payment data.',
+            'type' => 'blob',
+            'not null' => FALSE,
+            'serialize' => TRUE,
+            'default' => NULL,
+            'size' => 'normal'),
+          'comment' => array(
+            'description' => 'A comment made on the payment.',
+            'type' => 'text',
+            'size' => 'medium',
+            'not null' => FALSE,
+            'default' => NULL),
+          'received' => array(
+            'description' => 'The Unix timestamp indicating when the payment was received.',
+            'type' => 'int',
+            'not null' => TRUE,
+            'unsigned' => true,
+            'default' => 0),
+          'created' => array(
+            'description' => 'The request time that the payment receipt was created.',
+            'type' => 'int',
+            'not null' => TRUE,
+            'unsigned' => true,
+            'default' => 0),
+          'send' => array(
+            'description' => 'The Unix timestamp indicating when the payment receipt was send.',
+            'type' => 'int',
+            'not null' => TRUE,
+            'unsigned' => true,
+            'default' => 0),
+          'status' => array(
+            'description' => 'Indicating the payment receipt status.',
+            'type' => 'int',
+            'size' => 'tiny',
+            'not null' => TRUE,
+            'default' => 0)
+        ),
+        'indexes' => array(
+          'order_id' => array('order_id'),
+          'user_id' => array('user_id'),
+          'status' => array('status')
+        ),
+        'primary key' => array('id'),
+        'unique keys' => array(
+          'order' => array('order_id'),
+          'uuid' => array('uuid')
+        ),
+        'foreign keys' => array(
+          'orders' => array(
+            'table' => 'smartpan_order',
+            'columns' => array('id' => 'order_id')
+          ),
+          'users' => array(
+            'table' => 'users',
+            'columns' => array('uid' => 'uid')
+          )
+        )
+    );
+    
+    $schema['smartpan_subscription_history'] = array(
+        'description' => 'Stores history of subscriptions.',
+        'fields' => array(
+            'order_id' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE),
+            'subscription_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'user_id' => array(
+                'description' => 'The user id of the member that placed the order.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE),
+            'current_plan_id' => array(
+                'type' => 'int',
+                'description' => 'The current plan id for the subscription.',
+                'not null' => true,
+                'size' => 'tiny',
+                'unsigned' => true),
+            'future_plan_id' => array(
+                'type' => 'int',
+                'description' => 'The future plan id for the subscription.',
+                'not null' => true,
+                'size' => 'tiny',
+                'unsigned' => true),
+            'created' => array(
+                'description' => 'The Unix timestamp indicating when the history was created.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' > true),
+            'timestamp' => array(
+                'description' => 'The Unix timestamp indicating when the history should be processed.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' > true),
+        ),
+        'indexes' => array(
+          'subscription' => array('subscription_id', 'user_id'),
+          'created' => array('created'),
+          'timestamp' => array('timestamp')
+        ),
+        'foreign keys' => array(
+          'orders' => array(
+            'table' => 'smartpan_order',
+            'columns' => array('id' => 'order_id')
+          ),
+          'users' => array(
+            'table' => 'users',
+            'columns' => array('uid' => 'uid')
+          )
+        )
+    );
+    
+    return $schema;
+}
+
+?>

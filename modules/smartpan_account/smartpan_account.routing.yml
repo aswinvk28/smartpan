@@ -1,0 +1,16 @@
+smartpan_account.braintree_plan:
+  path: '/admin/braintree/plan'
+  defaults:
+    _entity_list: 'braintree_plan'
+    _title: 'Braintree Plans'
+  requirements:
+    _permission: 'administer braintree'
+    methods: 'GET'
+
+smartpan_account.braintree_plan_edit:
+  path: '/admin/braintree/plan/{braintree_plan}/edit'
+  defaults:
+    _entity_form: 'braintree_plan.default'
+    _title: 'Braintree Plans'
+  requirements:
+    _permission: 'administer braintree'

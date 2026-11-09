@@ -1,0 +1,10 @@
+id: freemember
+uuid: 5c95ba54-ee02-417f-ad00-ae2b3b0df06d
+label: 'Free Member User'
+weight: 3
+permissions:
+  - 'upgrade subscription'
+  - 'access dashboard'
+  - 'add payment method'
+status: true
+langcode: en

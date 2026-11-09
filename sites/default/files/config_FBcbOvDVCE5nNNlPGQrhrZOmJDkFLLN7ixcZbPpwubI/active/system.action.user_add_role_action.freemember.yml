@@ -1,0 +1,9 @@
+id: user_add_role_action.freemember
+label: 'Add the Free Member User role to the selected users'
+uuid: 513532e4-0451-4a0e-8e5d-9377f0133a4a
+status: true
+langcode: en
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: freemember

@@ -1,0 +1,9 @@
+id: user_remove_role_action.freemember
+label: 'Remove the Free Member User role from the selected users'
+uuid: 5653d25b-4ad2-4f61-8200-0c5b2b256fa0
+status: true
+langcode: en
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: freemember

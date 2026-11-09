@@ -1,0 +1,14 @@
+<div {{ attributes }}>
+    <ul class="nav nav-tabs">
+        {% for tab in items %}
+        <li class="tab-li {{ tab.active }}">{{ tab.content }}</li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content">
+        {% for tab in content %}
+        <div class="tab-pane {{ tab.active }}" id="{{ tab.id }}">
+            {{ tab.html }}
+        </div>
+        {% endfor %}
+    </div>
+</div>

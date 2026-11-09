@@ -1,0 +1,9 @@
+id: user_remove_role_action.normalmember
+label: 'Remove the Normal Member User role from the selected users'
+uuid: b5e600a0-6372-4d25-9e08-8c6fbc959e6b
+status: true
+langcode: en
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: normalmember

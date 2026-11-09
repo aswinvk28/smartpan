@@ -1,0 +1,5 @@
+id: account_holder
+label: 'User account Holder only menu'
+description: 'Links related to the user account holder.'
+langcode: en
+locked: true

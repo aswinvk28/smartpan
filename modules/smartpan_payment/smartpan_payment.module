@@ -1,0 +1,113 @@
+<?php
+
+require_once __DIR__ . '/includes/fields.php';
+require_once __DIR__ . '/includes/form.php';
+
+/**
+ * Implements hook_menu_link_defaults().
+ */
+function smartpan_payment_menu_link_defaults() {
+  $links['smartpan_payment.admin.order_overview'] = array(
+    'link_title' => 'Manage Orders',
+    'description' => "Management of Orders.",
+    'parent' => 'system.admin',
+    'route_name' => 'payment.order_overview',
+  );
+  $links['smartpan_payment.admin.payment_overview'] = array(
+    'link_title' => 'Manage Payments',
+    'route_name' => 'payment.payment_overview',
+    'description' => "Management of Payment Receipts.",
+    'parent' => 'system.admin'
+  );
+  $links['smartpan_payment.admin.payment_add'] = array(
+    'link_title' => 'Add Payment Receipts',
+    'route_name' => 'payment.payment_add',
+    'description' => "Add Payment Receipts.",
+    'parent' => 'smartpan_payment.admin.payment_overview'
+  );
+  $links['smartpan_payment.plan_change'] = array(
+    'link_title' => 'Upgrade the Plan',
+    'route_name' => 'smartpan_payment.change_plan',
+    'menu_name' => 'account_holder'
+  );
+
+  return $links;
+}
+
+/**
+ * Implements hook_entity_info_alter()
+ * @param type $entityInfo
+ */
+function smartpan_payment_entity_info_alter(&$entityInfo) {
+    $entityInfo['subscription']
+    ->setFormClass('upgrade', '\Drupal\smartpan_payment\Controller\PlanFormController');
+}
+
+function smartpan_payment_form_plan_upgrade_form_alter(&$form, &$form_state, $form_id) {
+    $form['include_billing'] = array(
+        '#type' => 'checkbox',
+        '#title' => 'Include Billing',
+        '#default_value' => 0
+    );
+    $form['include_billing']['#attributes']['id'] = 'billing-edit-form-display';
+
+    $form['billing_group'] = payment_billing_details_add_fields($form_state['controller']->getSmartpanUser());
+    $form['billing_group']['#type'] = 'container';
+    $form['billing_group']['#title'] = 'Billing Details';
+    $form['billing_group']['#title_display'] = 'invisible';
+    $form['billing_group']['#states'] = array(
+        'visible' => array(
+            '#billing-edit-form-display' => array('checked' => TRUE)
+        )
+    );
+}
+
+/**
+ * 
+ * Implements hook_permission()
+ */
+function smartpan_payment_permission() {
+    return array(
+        'add payment method' => array(
+            'title' => t('Add Payment Method'),
+            'restrict access' => TRUE,
+            'description' => t('Gives permission to add payment method in addition to custom access')
+        ),
+        'renew subscription' => array(
+            'title' => t('Renew Subscription'),
+            'restrict access' => TRUE,
+            'description' => t('Gives permission to renew subscription in addition to custom access')
+        ),
+        'upgrade subscription' => array(
+            'title' => t('Upgrade Subscription'),
+            'restrict access' => TRUE,
+            'description' => t('Gives permission to upgrade subscription in addition to custom access')
+        )
+    );
+}
+
+/**
+ * 
+ * Implements hook_library_info()
+ */
+function smartpan_payment_library_info() {
+    $libraries = array();
+    
+    $path = drupal_get_path('module', 'smartpan_payment');
+    $libraries['braintree'] = array(
+      'version' => \DRUPAL::VERSION,
+      'js' => array(
+        $path . '/js/braintree.js' => array(
+          'group' => JS_LIBRARY,
+          'every_page' => false,
+          'scope' => 'footer',
+          'type' => 'file',
+          'cache' => true
+        )
+      )
+    );
+    
+    return $libraries;
+}
+
+?>

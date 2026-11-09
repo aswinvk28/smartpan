@@ -1,0 +1,45 @@
+<ol class="comments-list">
+  <li class="comment">
+    <article>
+      <div class="gravatar">
+        {%-
+          if (!picture) -%}
+            <img src="{{ parent_root }}/images/gravatar.jpg" alt="anon" /> 
+          {%- else -%}
+            {{ picture }}
+          {%- endif -%}
+        ?>
+      </div>
+      <div class="comment-body">
+        <div class="comment-meta">
+          <div class="comment-author">{{ author }}</div>
+            <div class="comment-date">
+                {% format_date(comment.created, 'custom', 'M d, Y') %}
+            </div>
+            <span class="pull-right">
+                {%- if (content['links']) -%} {{ content.links }} {%- endif -%}
+            </span>
+        </div>
+
+        {%- if (new) -%}
+        <span class="new">{{ new }}</span>
+        {%- endif -%}
+
+        <div class="comment-content"{{ content_attributes }}>
+          <div class="row">
+          <p>
+          {%- hide(content.links) -%}
+          {{ $content }}
+          </p>
+          </div>
+           {%- if ($signature) -%}
+           <div class="user-signature clearfix">
+             {{ $signature }}
+          </div>
+         {%- endif -%}
+        </div>
+		    
+      </div>
+    </article>
+  </li>
+</ol>

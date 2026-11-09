@@ -1,0 +1,172 @@
+<div id="wrapper">
+  <header id="header">
+    <div class="container">
+    
+      <div class="eight columns">
+
+        {%- if (page.header_left) -%}
+            {{ page.header_left }}
+        {%- endif -%}
+
+        {%- if (logo) -%}
+        <h1 class="logo">
+          <a href="{{ front_page }}" title="Home" rel="home" id="logo">
+            <img src="{{ logo }}" alt="Home" />
+          </a>
+        </h1>
+        {%- endif -%}
+
+        {%- if (site_name || site_slogan) -%}
+          <div id="name-and-slogan" {%- if (disable_site_name and disable_site_slogan) -%}
+               class="hidden" 
+               {%- endif -%}>
+
+            {%- if (site_name) -%}
+              <h1 id="site-name"{%- if (disable_site_name) -%} class="hidden" {%- endif -%}>
+                <a href="{{ front_page }}" title="Home" rel="home"><span>{{ site_name }}</span></a>
+              </h1>
+            {%- endif -%}
+
+            {%- if (site_slogan) -%}
+              <div id="site-slogan"{%- if (disable_site_slogan) -%} class="hidden" {%- endif -%}>
+                {{ site_slogan }}
+              </div>
+            {%- endif -%}
+
+          </div> <!-- /#name-and-slogan -->
+        {%- endif -%}
+		    
+      </div>
+      
+     <div class="eight columns">
+        {{ page.header_right }}
+     </div>  
+     
+     <div class="clear"></div>
+     
+     <div class="sixteen columns">
+        <div class="menu-container clearfix">
+            <nav id="navigation" class="navigation">
+                <div class="menu">
+                    {{ page.header_menu }}
+                </div>  
+            </nav>
+            {%- if (page.header_search) -%}
+                <div class="search-wrapper">
+                  {{ page.header_search }}
+                </div><!--/ .search-wrapper--> 
+            {%- endif -%}
+        </div>
+     </div>
+     
+    </div>  				
+  </header>
+
+    {{ page.before_content_no_wrap }}
+
+  <section id="content">
+      <div class="container">
+
+        {%- if (title) -%}
+        <div class="page-header clearfix">
+
+            {%- if (breadcrumb && (theme_get_setting('breadcrumbs') == '1') -%}
+            <div id="breadcrumbs">{{ breadcrumb }}</div>	
+            {%- endif -%}
+
+            <h1 class="alignleft">{{ title }}</h1>
+        </div><!--/ .page-header-->
+        {%- endif -%}
+
+        {{ page.before_content }}
+
+        {%- if (page.sidebar_left) -%}
+          <aside id="sidebar" class="four columns">
+            {{ page.sidebar_left }}
+          </aside>
+        {%- endif -%}
+
+        {%- if (page.sidebar_right and page.sidebar_left) -%}
+          <section id="main" class="eight columns">
+        {%- endif -%}
+
+        {%- if (page.sidebar_right and not page.sidebar_left) || (page.sidebar_left and not page.sidebar_right -%}
+          <section id="main" class="twelve columns">
+        {%- endif -%}
+
+        {{ messages }}
+
+        {%- if (tabs) -%}
+          <div id="drupal_tabs" class="tabs">
+            {{ tabs }}
+          </div>
+        {%- endif -%}
+        {{ page.help }}
+        {%- if action_links) -%}
+          <ul class="action-links">
+            {{ action_links }}
+          </ul>
+        {%- endif -%}
+
+        {%- if (page.content) -%}
+        {{ page.content }}
+        {%- endif -%}
+
+        {%- if (page.sidebar_right || page.sidebar_left) -%}
+          </section>
+        {%- endif -%}
+
+        {%- if (page.sidebar_right) -%}
+          <aside id="sidebar" class="four columns">
+        {{ page.sidebar_right }}
+          </aside>
+        {%- endif -%}
+		    
+    </div>
+    
+    <div id="after-content" class="container">
+      {{ page.after_content }}
+    </div>
+    
+  </section> 
+
+  {{ page.after_content_no_wrap }}
+
+  <footer id="footer">
+    <div class="container">
+      <div class="four columns">
+        {%- if (page.footer_1) -%}
+          {{ page.footer_1 }}
+        {%- endif -%}
+      </div>
+
+      <div class="four columns">
+        {%- if (page.footer_2) -%}
+          {{ page.footer_2 }}
+        {%- endif -%}
+      </div>
+
+      <div class="four columns">
+        {%- if (page.footer_3) -%}
+          {{ page.footer_3 }}
+        {%- endif -%}
+      </div>
+
+      <div class="four columns">
+        {%- if (page.footer_4) -%}
+          {{ page.footer_4 }}
+        {%- endif -%}
+      </div>
+
+      <div class="clear"></div>
+      
+      <div class="sixteen columns">
+        <div class="adjective clearfix">
+          {%- if (page.footer_bottom) -%}
+            {{ page.footer_bottom }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>  
+  </footer>
+</div>

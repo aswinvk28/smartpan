@@ -1,0 +1,62 @@
+smartpan_payment.order_delete:
+  path: '/admin/order/{smartpan_order}/delete'
+  defaults:
+    _title: 'Delete order'
+    _entity_form: 'smartpan_order.delete'
+  requirements:
+    _permission: 'administer orders'
+    methods: 'GET'
+    
+smartpan_payment.order_edit:
+  path: '/admin/order/{smartpan_order}/edit'
+  defaults:
+    _title: 'Edit order'
+    _entity_form: 'smartpan_order.default'
+  requirements:
+    _permission: 'administer orders'
+    methods: 'GET'
+    
+smartpan_payment.order_overview:
+  path: '/admin/order/list'
+  defaults:
+    _entity_list: 'smartpan_order'
+    _title: 'Orders'
+  requirements:
+    _permission: 'administer orders'
+    methods: 'GET'
+    
+smartpan_payment.payment_add:
+  path: '/admin/payment/add'
+  defaults:
+    _title: 'Add payment receipt'
+    _entity_form: 'smartpan_payment.default'
+  requirements:
+    _permission: 'create payments'
+    methods: 'GET'
+
+smartpan_payment.payment_delete:
+  path: '/admin/payment/{smartpan_payment}/delete'
+  defaults:
+    _title: 'Delete payment Receipt'
+    _entity_form: 'smartpan_payment.delete'
+  requirements:
+    _permission: 'administer payments'
+    methods: 'GET'
+    
+smartpan_payment.payment_edit:
+  path: '/admin/payment/{smartpan_payment}/edit'
+  defaults:
+    _title: 'Edit payment Receipt'
+    _entity_form: 'smartpan_payment.default'
+  requirements:
+    _permission: 'administer payments'
+    methods: 'GET'
+    
+smartpan_payment.payment_overview:
+  path: '/admin/payment/list'
+  defaults:
+    _entity_list: 'smartpan_payment'
+    _title: 'Payment Receipts'
+  requirements:
+    _permission: 'administer payments'
+    methods: 'GET'

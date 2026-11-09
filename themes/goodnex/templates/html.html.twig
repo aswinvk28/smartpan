@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="{{ language.language }}" dir="{{ language.dir }}"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="{{ language.language }}" dir="{{ language.dir }}"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="{{ language.language }}" dir="{{ language.dir }}"> <![endif]-->
+<!--[if gt IE 8]> <!--> 
+<html {{ html_attributes }}> <!--<![endif]-->
+<head>
+
+{{ head }}
+<title>
+    {{ head_title }}
+</title>
+{{ styles }}
+{{ scripts }}
+  
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Google Web Fonts
+================================================== -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,600italic|Handlee' rel='stylesheet' type='text/css' />
+	
+{%- goodnex_user_css -%}
+
+{%- if ((theme_get_setting('sticky_header') == '1') ) -%}
+    <script type='text/javascript' src='{{ parent_root }}/js/sticky.js'></script>
+{%- endif -%}
+
+</head>
+
+<body 
+      {%- theme_get_setting('site_layout') -%}
+      {%- theme_get_setting('skin_style') -%}
+      {%- theme_get_setting('background_select') -%}
+      {%- theme_get_setting('color_scheme') -%}" {{ attributes }}>
+{{ page_top }}
+{{ page }}
+{{ page_bottom }}
+
+</body>
+</html>

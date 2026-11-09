@@ -1,0 +1,10 @@
+id: premiummember
+uuid: fc990345-dcb0-4c54-ba3d-61ba0ced3290
+label: 'Premium Member User'
+weight: 6
+permissions:
+  - 'upgrade subscription'
+  - 'access dashboard'
+  - 'add payment method'
+status: true
+langcode: en

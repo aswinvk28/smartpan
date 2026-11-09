@@ -1,0 +1,26 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+function smartpan_database_install() {
+    smartpan_database_smartpan_account_install();
+    smartpan_database_product_subscription_install();
+    smartpan_database_user_subscription_install();
+}
+
+function smartpan_database_smartpan_account_install() {
+    $transaction = \Drupal::database()->startTransaction();
+    try {
+        \Drupal::entityManager()->getStorageController('plan')->_addForeignKeys();
+    } catch (Exception $ex) {
+        $transaction->rollback();
+    }
+}
+
+function smartpan_database_product_subscription_install() {
+    
+}
+
+function smartpan_database_user_subscription_install() {
+    
+}

@@ -1,0 +1,8 @@
+braintree:
+  smartpan_sandbox:
+    account_name: 'smartpan_sandbox'
+    environment: 'sandbox'
+    merchant_id: 'y5tfyrfj8sszhtgf'
+    public_key: 'q58q4hhpczygz8km'
+    private_key: '3daa380ccdc759a062d99be986763fd6'
+    cse_key: 'MIIBCgKCAQEAqq69a7dQ8zLodKjk5FrwL7dUr32ht+I3JmhoAZdqvWs0RsQnBFZr+cxub2adGpbqqlYVPeR+wB/gkp0JCXVQc3Eqfpy0fxGwqNyYkoZIhLzNbqDuSg+9JMu10sZ/ZJP4tWu9GL9kLNTtpGe2bDG9VEL9mx6YSI7MVyxy7Z9l3lD5n8pllsXHk4N4VT1UuugeKt8vSRfL2EvJRbi97wlT97qPw6a1FREhEZdq1s5Bivo2m6nbu3TG+Wz8HqH9OmataLj6PR8w0jzLHUx1/HhvOv7e0FrdGtvZuWrp9QZ6wD++ZY4/eR+hwHBTOxZbG2+tgmGJ5dWNtcFwO+QojmtwvwIDAQAB'

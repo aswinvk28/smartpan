@@ -1,0 +1,12 @@
+uuid: d8fe917d-b2a6-4b84-9503-3af59295b7c2
+name: smartpan.financial.test.com
+mail: unamious@ymail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+mail_notification: ''

@@ -1,0 +1,9 @@
+id: user_remove_role_action.basicmember
+label: 'Remove the Basic Member User role from the selected users'
+uuid: c1232235-a4bf-4054-be00-c6c99c686ad2
+status: true
+langcode: en
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: basicmember

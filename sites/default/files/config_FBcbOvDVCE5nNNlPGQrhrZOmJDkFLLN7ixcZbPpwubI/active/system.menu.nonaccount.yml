@@ -1,0 +1,7 @@
+id: nonaccount
+uuid: 64ec34ad-dd6f-4d0f-850e-144a2444c9a2
+label: 'Non User account Holder menu'
+description: 'Links related to the non user account holder.'
+status: true
+langcode: en
+locked: true

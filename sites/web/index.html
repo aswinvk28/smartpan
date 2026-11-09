@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="packages/Flat-UI/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="packages/Flat-UI/bootstrap/css/style.min.css" />
+        <link rel="stylesheet" href="bower_components/gridster/dist/jquery.gridster.min.css" />
+        <link rel="stylesheet" href="packages/Flat-UI/css/flat-ui.css" />
+        <script src="bower_components/requirejs/require.js"></script>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/underscore/underscore.js"></script>
+        <script src="bower_components/backbone/backbone.js"></script>
+        <script src="bower_components/gridster/dist/jquery.gridster.js"></script>
+        <script src="bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+        <script src="packages/Flat-UI/js/flatui-checkbox.js"></script>
+    </head>
+    <body class="body-patternbg">
+        <div id="page" class="page">
+            <header class="header btn clearfix">
+                <section class="container">
+                    <div class="logo-container span7">
+                        
+                    </div>
+                    <div class="form-search-container clearfix">
+                        <form class="form-search clearfix span5">
+                            <div class="input-append pull-left">
+                                <input id="stock-symbol" type="text" class="span5 input-padding-medium search-query" autocomplete="off" placeholder="STOCK SYMBOL" />
+                                <button class="btn btn-large stock-symbol-search" type="submit"><i class="icon-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </header>
+            <section class="app container column">
+                <div class="status-messages"></div>
+                <div class="gridster row">
+                    <ul class="gridster-container">
+                        <li class="span5 vertical-span2" data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-tags"></i></li>
+                                    <li><h5>STOCK PROFILE</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                        <li class="span2 vertical-span2" data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-credit"></i></li>
+                                    <li><h5>STOCK PRICE</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                        <li class="span2 vertical-span2" data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-cargo"></i></li>
+                                    <li><h5>STOCK VOLUME</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                        <li class="span2 vertical-span2" data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-star-empty"></i></li>
+                                    <li><h5>INDUSTRY RANK</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                        <li class="span2 vertical-span2" data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-star"></i></li>
+                                    <li><h5>MARKET RANK</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                        <li class="span5 vertical-span5" data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-info-sign"></i></li>
+                                    <li><h5>STOCK NEWS</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                        <li class="span10 vertical-span2" data-row="1" data-col="1" data-sizex="4" data-sizey="1">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-old-man"></i></li>
+                                    <li><h5>STOCK INVESTORS</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                        <li class="span2 vertical-span5" data-row="1" data-col="1" data-sizex="1" data-sizey="2">
+                            <div class="clearfix heading">
+                                <ul class="inline">
+                                    <li class="btn"><i class="icon-large icon-stats"></i></li>
+                                    <li><h5>STOCK RETURN</h5></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix gridster-content2"></div>
+                            <div class="clearfix gridster-bottom">
+                                <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        <div class="container">
+            
+            <input type="checkbox" class="flat-ui-component component-checkbox checkbox" name="checkbox" />
+            
+        </div>
+        <script type="text/template" id="widget-view">
+            <li class="span5 vertical-span2" data-row="<%= widget_row %>" data-col="<%= widget_col %>" data-sizex="<%= widget_sizex %>" data-sizey="<%= widget_sizey %>">
+                <div class="clearfix heading">
+                    <ul class="inline">
+                        <li class="btn"><i class="icon-large icon-tags"></i></li>
+                        <li><h5><%= widget_title %></h5></li>
+                    </ul>
+                </div>
+                <div class="clearfix gridster-content2"><%= widget_content %></div>
+                <div class="clearfix gridster-bottom">
+                    <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+                </div>
+            </li>
+        </script>
+        <script src="app.js"></script>
+    </body>
+</html>

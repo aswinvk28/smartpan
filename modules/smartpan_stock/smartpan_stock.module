@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Implements hook_permission()
+ */
+function smartpan_stock_permission() {
+    return array(
+        'access stock profile list' => array(
+            'title' => t('Access List of Stock Profiles'),
+            'restrict access' => TRUE,
+            'description' => t('Gives access to the list of stock profiles from database')
+        )
+    );
+}
+
+/**
+ * Implements hook_cron()
+ */
+function smartpan_stock_cron() {
+    \Drupal::service('stock.cron_manager')->runCron();
+}
+
+?>

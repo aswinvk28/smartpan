@@ -1,0 +1,6 @@
+name: Smartpan Database
+type: module
+description: 'Administration for Database Parameters'
+package: Smartpan_Database
+version: VERSION
+core: 8.x

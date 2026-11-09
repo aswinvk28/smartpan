@@ -1,0 +1,18 @@
+id: comment.node__comment.default
+uuid: 3e90cd62-f883-4a19-b744-68c9915a8a6f
+targetEntityType: comment
+bundle: node__comment
+mode: default
+content:
+  author:
+    weight: -2
+  subject:
+    weight: -1
+  comment_body:
+    type: text_textarea
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+hidden: {  }
+status: true

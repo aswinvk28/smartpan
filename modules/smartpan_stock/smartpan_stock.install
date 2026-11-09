@@ -1,0 +1,391 @@
+<?php
+
+function smartpan_stock_schema() {
+    $schema['stock_profile'] = array(
+        'description' => 'Stores the details of the stock',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'unsigned' => true),
+            'symbol' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'length' => 20),
+            'industry' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'default' => '',
+                'length' => 255),
+            'name' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'default' => '',
+                'length' => 255),
+            'exchange' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'default' => '',
+                'length' => 50),
+            'currency' => array(
+                'type' => 'varchar',
+                'description' => 'ISO Code of the currency',
+                'not null' => true,
+                'length' => 7,
+                'default' => '')
+        ),
+        'indexes' => array(
+            'currency' => array('currency'),
+            'exchange' => array('exchange'),
+            'symbol' => array('symbol', 'id')
+        ),
+        'primary key' => array('id'),
+        'unique keys' => array(
+            'stock' => array('symbol')
+        )
+    );
+    
+    $schema['stock_size'] = array(
+        'description' => 'Stores the frequent stock data',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'unsigned' => true,
+                'size' => 'big'),
+            'stock_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'stock_symbol' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'length' => 20),
+            'price_value' => array(
+                'mysql_type' => 'double',
+                'type' => 'numeric',
+                'precision' => 13,
+                'scale' => 4,
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true),
+            'price_change' => array(
+                'mysql_type' => 'float',
+                'type' => 'numeric',
+                'precision' => 7,
+                'scale' => 4,
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => false),
+            'volume_value' => array(
+                'mysql_type' => 'int(15)',
+                'type' => 'numeric',
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true),
+            'trade_date' => array(
+                'mysql_type' => 'date',
+                'type' => 'numeric',
+                'not null' => false,
+                'default' => NULL),
+            'trade_time' => array(
+                'mysql_type' => 'time',
+                'type' => 'numeric',
+                'not null' => false,
+                'default' => NULL),
+            'created' => array(
+                'type' => 'int',
+                'type' => 'numeric',
+                'description' => 'A timestamp for creation of subscription.',
+                'not null' => true,
+                'unsigned' => true,
+                'default' => 0)
+        ),
+        'foreign keys' => array(
+            'stock' => array(
+                'table' => 'stock_profile',
+                'columns' => array('id' => 'stock_id', 'symbol' => 'stock_symbol')
+            )
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'date' => array('trade_date'),
+            'time' => array('trade_time'),
+            'stock' => array('stock_symbol', 'stock_id')
+        )
+    );
+    
+    $schema['industry_rank'] = array(
+        'description' => 'Stores frequent industry rank',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'unsigned' => true,
+                'size' => 'big'),
+            'stock_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'stock_symbol' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'length' => 20),
+            'value' => array(
+                'mysql_type' => 'double',
+                'type' => 'numeric',
+                'precision' => 7,
+                'scale' => 4,
+                'not null' => true,
+                'unsigned' => true),
+            'created' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true)
+        ),
+        'foreign keys' => array(
+            'stock' => array(
+                'table' => 'stock_profile',
+                'columns' => array('id' => 'stock_id', 'symbol' => 'stock_symbol')
+            )
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'date' => array('created'),
+            'stock' => array('stock_symbol', 'stock_id')
+        )
+    );
+    
+    $schema['market_rank'] = array(
+        'description' => 'Stores frequent market rank',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'unsigned' => true,
+                'size' => 'big'),
+            'stock_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'stock_symbol' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'length' => 20),
+            'value' => array(
+                'mysql_type' => 'double',
+                'type' => 'numeric',
+                'precision' => 7,
+                'scale' => 4,
+                'not null' => true,
+                'unsigned' => true),
+            'created' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true)
+        ),
+        'foreign keys' => array(
+            'stock' => array(
+                'table' => 'stock_profile',
+                'columns' => array('id' => 'stock_id', 'symbol' => 'stock_symbol')
+            )
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'date' => array('created'),
+            'stock' => array('stock_symbol', 'stock_id')
+        )
+    );
+    
+    $schema['stock_investor'] = array(
+        'description' => 'Stores the details of investors of stocks',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'unsigned' => true,
+                'size' => 'big'),
+            'stock_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'stock_symbol' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'length' => 20),
+            'type1' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type2' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type3' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type4' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type5' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type6' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type7' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type8' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'type9' => array(
+                'type' => 'float',
+                'not null' => false,
+                'default' => NULL),
+            'created' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true)
+        ),
+        'foreign keys' => array(
+            'stock' => array(
+                'table' => 'stock_profile',
+                'columns' => array('id' => 'stock_id', 'symbol' => 'stock_symbol')
+            )
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'date' => array('created'),
+            'stock' => array('stock_symbol', 'stock_id')
+        )
+    );
+    
+    $schema['stock_history'] = array(
+        'description' => 'Stock Price and Volume History obtained at the close of the day',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'unsigned' => true,
+                'size' => 'big'),
+            'stock_id' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'stock_symbol' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'length' => 20),
+            'open' => array(
+                'mysql_type' => 'double',
+                'type' => 'numeric',
+                'precision' => 13,
+                'scale' => 4,
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true),
+            'close' => array(
+                'mysql_type' => 'double',
+                'type' => 'numeric',
+                'precision' => 13,
+                'scale' => 4,
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true),
+            'high' => array(
+                'mysql_type' => 'double',
+                'type' => 'numeric',
+                'precision' => 13,
+                'scale' => 4,
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true),
+            'low' => array(
+                'mysql_type' => 'double',
+                'type' => 'numeric',
+                'precision' => 13,
+                'scale' => 4,
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true),
+            'volume' => array(
+                'mysql_type' => 'int(15)',
+                'type' => 'numeric',
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true),
+            'date' => array(
+                'mysql_type' => 'date',
+                'type' => 'date',
+                'not null' => false,
+                'default' => NULL),
+            'dividend' => array(
+                'mysql_type' => 'float',
+                'type' => 'numeric',
+                'precision' => 8,
+                'scale' => 3,
+                'not null' => false,
+                'default' => NULL,
+                'unsigned' => true)
+        ),
+        'foreign keys' => array(
+            'stock' => array(
+                'table' => 'stock_profile',
+                'columns' => array('id' => 'stock_id', 'symbol' => 'stock_symbol')
+            )
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'date' => array('date'),
+            'stock' => array('stock_symbol', 'stock_id')
+        )
+    );
+    
+    $schema['smartpan_account_token'] = array(
+        'description' => 'API Token for the Smartpan Users',
+        'fields' => array(
+            'token' => array(
+                'type' => 'varchar',
+                'dfescription' => 'The temporary account token for the user',
+                'length' => 96,
+                'not null' => false,
+                'default' => NULL),
+            'user_id' => array(
+                'description' => 'The user.uid of the member for whom the token is created.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE),
+            'created' => array(
+                'description' => 'The Unix timestamp indicating when the token was created.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' > true),
+            'expiry' => array(
+                'description' => 'The Unix timestamp indicating when the token expires.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' > true),
+            'subscription_id' => array(
+                'description' => 'The subscription_id for the token.',
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true),
+            'order_id' => array(
+                'description' => 'The order_id for the token.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE),
+        )
+    );
+    
+    return $schema;
+}
+
+?>

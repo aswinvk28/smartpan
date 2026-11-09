@@ -1,0 +1,309 @@
+<?php
+
+require_once __DIR__ . '/includes/form.php';
+
+/**
+ * Implements hook_menu_link_defaults()
+ */
+function account_settings_menu_link_defaults() {
+  $links['account_settings.account'] = array(
+    'link_title' => 'Account Settings',
+    'route_name' => 'account_settings.account',
+    'menu_name' => 'account'
+  );
+  return $links;
+}
+
+/**
+ * Implement hook_theme
+ */
+function account_settings_theme($existing, $type, $theme, $path) {
+    return array(
+//        'plan_type_free-trial_features' => array(
+//            'render element' => 'element',
+//            'template' => 'plan-type-free-trial-features',
+//            'path' => $path.'/templates/plans'
+//        ),
+//        'plan_type_features' => array(
+//            'render element' => 'element',
+//            'template' => 'plan-type-features',
+//            'path' => $path.'/templates/plans'
+//        ),
+        'user_profile' => array(
+            'render element' => 'element',
+            'template' => 'user-profile',
+            'path' => $path.'/templates/user'
+        ),
+        'user_account' => array(
+            'render element' => 'element',
+            'template' => 'user-account',
+            'path' => $path.'/templates/user'
+        )
+    );
+}
+
+/**
+ * Implements hook_entity_type_view
+ * Implements hook_smartpan_user_view
+ */
+function account_settings_smartpan_user_view($smartpan_user, $display, $view_mode) {
+    $smartpanUserId = $smartpan_user->id();
+    if(!empty($smartpanUserId)) {
+        if($view_mode == 'profile') {
+            $smartpan_user_profile = array('#theme' => 'user_profile', '#smartpan_user' => $smartpan_user, '#view_mode' => $view_mode);
+            $smartpan_user->content['profile'] = array(
+                '#markup' => drupal_render($smartpan_user_profile),
+                '#weight' => -1
+            );
+        } elseif($view_mode == 'account') {
+            $smartpan_user_account = array('#theme' => 'user_account', '#smartpan_user' => $smartpan_user, '#view_mode' => $view_mode);
+            $smartpan_user->content['account'] = array(
+                '#markup' => drupal_render($smartpan_user_account),
+                '#weight' => -1
+            );
+        }
+    }
+}
+
+/**
+ * Implements hook_entity_type_view_alter
+ */
+function account_settings_user_view_alter(&$build, $account, $display) {
+    if($account->isAuthenticated() && smartpan_account_is_member($account)) {
+        $smartpan_user = SmartPan\Bundles\AccountBundle\Controller\UserController::getCurrentActiveSmartpanUser($account);
+        $view = entity_view($smartpan_user, 'profile');
+        $build += $view;
+    }
+}
+
+/**
+ * Implements hook_preprocess_HOOK
+ */
+function account_settings_preprocess_user_profile(&$variables) {
+    $smartpan_user = $variables['element']['#smartpan_user'];
+    
+    $variables['content']['container'] = array(
+        '#type' => 'container',
+    );
+    
+    $variables['content']['container'] += account_settings_smartpan_user_details_ajax_field($smartpan_user);
+    
+    $variables['attributes']['class'][] = 'profile';
+}
+
+/**
+ * Implements hook_preprocess_HOOK
+ */
+function account_settings_preprocess_user_account(&$variables) {
+    $smartpan_user = $variables['element']['#smartpan_user'];
+    
+    $variables['content']['container'] = array(
+        '#type' => 'container',
+    );
+    
+    drupal_add_library('flatui', 'flatui_checkbox', true);
+    
+    $tabs = array();
+    
+    $tabs['personal'] = array(
+        '#type' => 'container',
+        '#title' => 'Personal',
+        '#container_type' => 'non_form'
+    );
+    
+    $tabs['billing'] = array(
+        '#type' => 'container',
+        '#title' => 'Billing',
+        '#container_type' => 'non_form'
+    );
+    
+    $tabs['account_info'] = array(
+        '#type' => 'container',
+        '#title' => 'Account Information',
+        '#container_type' => 'non_form'
+    );
+    
+    $tabs['card_info'] = array(
+        '#type' => 'container',
+        '#title' => 'Payment Details',
+        '#container_type' => 'non_form'
+    );
+    
+    $tabs['personal']['checked'] = array(
+        '#type' => 'checkbox',
+        '#title' => 'Click to Edit',
+        '#default_value' => 0,
+        '#attributes' => array(
+            'id' => 'personal-edit-form-display'
+        ),
+        '#prefix' => '<div class="clearfix">',
+        '#suffix' => '</div>',
+    );
+    
+    $personalForm = new SmartPan\Bundles\CustomerBundle\Form\PersonalDetailsEditForm();
+    $tabs['personal']['form_container'] = array(
+        '#type' => 'container',
+        '#attributes' => array(
+            'class' => array('form-wrapper')
+        )
+    );
+    $tabs['personal']['form_container']['form'] = \Drupal::formBuilder()->getForm($personalForm);
+    $tabs['personal']['form_container']['#states'] = array(
+        'visible' => array(
+            '#personal-edit-form-display' => array('checked' => TRUE)
+        )
+    );
+    
+    $tabs['personal']['ajax_container'] = array(
+        '#type' => 'container',
+        '#attributes' => array(
+            'class' => array('form-wrapper')
+        )
+    );
+    $tabs['personal']['ajax_container']['ajax_field'] = account_settings_smartpan_user_details_ajax_field($smartpan_user);
+    $tabs['personal']['ajax_container']['#states'] = array(
+        'invisible' => array(
+            '#personal-edit-form-display' => array('checked' => TRUE)
+        )
+    );
+    
+    $tabs['billing']['checked'] = array(
+        '#type' => 'checkbox',
+        '#title' => 'Click to Edit',
+        '#default_value' => 0,
+        '#attributes' => array(
+            'id' => 'billing-edit-form-display'
+        ),
+        '#prefix' => '<div class="clearfix">',
+        '#suffix' => '</div>',
+    );
+    
+    $tabs['billing']['form_container'] = array(
+        '#type' => 'container',
+        '#attributes' => array(
+            'class' => array('form-wrapper')
+        )
+    );
+    $billingForm = new SmartPan\Bundles\CustomerBundle\Form\BillingDetailsEditForm();
+    $tabs['billing']['form_container']['form'] = \Drupal::formBuilder()->getForm($billingForm);
+    $tabs['billing']['form_container']['#states'] = array(
+        'visible' => array(
+            '#billing-edit-form-display' => array('checked' => TRUE)
+        )
+    );
+    
+    $tabs['billing']['ajax_container'] = array(
+        '#type' => 'container',
+        '#attributes' => array(
+            'class' => array('form-wrapper')
+        )
+    );
+    $tabs['billing']['ajax_container']['ajax_field'] = payment_billing_details_ajax_field($smartpan_user);
+    $tabs['billing']['ajax_container']['#states'] = array(
+        'invisible' => array(
+            '#billing-edit-form-display' => array('checked' => TRUE)
+        )
+    );
+    
+    $tabs['account_info']['upgrade_container'] = array(
+        '#markup' => '<div class="clearfix">'
+    );
+    $tabs['account_info']['upgrade_button'] = array(
+        '#prefix' => '',
+        '#suffix' => '',
+        '#value' => 'Upgrade Account',
+        '#theme' => 'link_button',
+        '#button_type' => 'warning',
+        '#attributes' => array(
+            'href' => \Drupal::urlGenerator()->generateFromRoute('payment.change_plan')
+        )
+    );
+    $currentPlan = $smartpan_user->getActiveSubscription()->getPlan();
+    $planType = entity_load('taxonomy_term', $currentPlan->get('type')->value);
+    if($planType->get('name')->value == 'free-trial') {
+        $preDecidedPlan = $smartpan_user->getActiveSubscription()->getPreDecidedPlan();
+        if(!empty($preDecidedPlan)) {
+            $tabs['account_info']['upgrade_specific_button'] = array(
+                '#prefix' => '',
+                '#suffix' => '',
+                '#value' => 'Upgrade to pre-decided Plan',
+                '#theme' => 'link_button',
+                '#button_type' => 'info',
+                '#attributes' => array(
+                    'href' => \Drupal::urlGenerator()->generateFromRoute('payment.change_plan', array(
+                        'plan_machine_name' => $preDecidedPlan->get('plan_machine_name')->value
+                    ))
+                )
+            );
+        }
+    }
+    $tabs['account_info']['password_reset'] = array(
+        '#prefix' => '',
+        '#suffix' => '',
+        '#value' => 'Reset Password',
+        '#theme' => 'link_button',
+        '#button_type' => 'success',
+        '#attributes' => array(
+            'href' => \Drupal::urlGenerator()->generateFromRoute('user.pass')
+        )
+    );
+    $tabs['account_info']['edit_user'] = array(
+        '#prefix' => '',
+        '#suffix' => '',
+        '#value' => 'Edit Account Details',
+        '#theme' => 'link_button',
+        '#button_type' => 'danger',
+        '#attributes' => array(
+            'href' => \Drupal::urlGenerator()->generateFromRoute('user.edit', array(
+                'user' => $smartpan_user->get('user_id')->value
+            ))
+        )
+    );
+    $tabs['account_info']['upgrade_container_close'] = array(
+        '#markup' => '</div>'
+    );
+    $tabs['account_info']['subscription_details'] = array(
+        '#type' => 'container',
+        '#title' => 'Subscription Details'
+    );
+    $subscriptionForm = new SmartPan\Bundles\CustomerBundle\Form\SubscriptionDetailsForm();
+    $tabs['account_info']['subscription_details']['form'] = \Drupal::formBuilder()->getForm($subscriptionForm);
+    
+    if($planType->get('name')->value != 'free-trial') {
+        $tabs['card_info']['card_add'] = array(
+            '#value' => 'Save card in Secure Vault',
+            '#prefix' => '<div class="clearfix">',
+            '#suffix' => '</div>',
+            '#description' => 'For future payments and subscriptions you can add a card which will be saved in the secure vault',
+            '#theme' => 'link_button',
+            '#button_type' => 'warning',
+            '#attributes' => array(
+                'href' => \Drupal::urlGenerator()->generateFromRoute('payment.card_add')
+            )
+        );
+    } else {
+        $tabs['card_info']['card_add'] = array(
+            '#type' => 'html_tag',
+            '#tag' => 'p',
+            '#value' => 'Upgrade to a paid plan to add a card to the secure vault',
+        );
+    }
+    
+    $tabs['card_info']['payment_details'] = array(
+        '#type' => 'container',
+        '#title' => 'Payment Details'
+    );
+    
+    $paymentForm = new SmartPan\Bundles\CustomerBundle\Form\PaymentDetailsForm();
+    $tabs['card_info']['payment_details']['form'] = \Drupal::formBuilder()->getForm($paymentForm);
+    
+    $variables['content']['container']['tabs'] = $tabs;
+    $variables['content']['container']['tabs'] += array(
+        '#type' => 'container',
+        '#theme' => 'tabs'
+    );
+    
+    $variables['attributes']['class'][] = 'account';
+}
+
+?>

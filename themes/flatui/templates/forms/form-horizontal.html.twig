@@ -1,0 +1,6 @@
+{% for field in form_rendered.fields %}
+<label class="clearfix column_mini">
+    <span class="clearfix">{{ field.name }}</span>
+    {{ form_rendered.children }}
+</label>
+{% endfor %}

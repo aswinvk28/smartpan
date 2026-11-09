@@ -1,0 +1,6 @@
+name: Braintree
+type: module
+description: 'Enables the use of Braintree API.'
+package: Smartpan_Payment
+version: VERSION
+core: 8.x

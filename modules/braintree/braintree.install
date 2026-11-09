@@ -1,0 +1,25 @@
+<?php
+
+function braintree_install() {
+    if(settings()->get('environment') == 'local') {
+        \Drupal::config('braintree.account')
+        ->set('name', 'smartpan_sandbox')
+        ->save();
+    } elseif(settings()->get('environment') == 'dev') {
+        \Drupal::config('braintree.account')
+        ->set('name', 'smartpan_sandbox')
+        ->save();
+    } elseif(settings()->get('environment') == 'qa') {
+        \Drupal::config('braintree.account')
+        ->set('name', 'smartpan_sandbox')
+        ->save();
+    } elseif(settings()->get('environment') == 'uat') {
+        \Drupal::config('braintree.account')
+        ->set('name', 'smartpan_sandbox')
+        ->save();
+    } elseif(settings()->get('environment') == 'production') {
+        
+    }
+}
+
+?>

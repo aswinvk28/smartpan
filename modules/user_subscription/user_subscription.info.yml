@@ -1,0 +1,9 @@
+name: User Subscription
+type: module
+description: 'Enables the User to subscribe for the Product'
+package: SmartPan
+version: VERSION
+dependencies: 
+  - product_subscription
+core: 8.x
+configure: user_subscription.subscription_overview

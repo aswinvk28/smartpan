@@ -1,0 +1,10 @@
+braintree.account:
+  type: mapping
+  label: 'Site information'
+  mapping:
+    name:
+      type: string
+      label: 'Account Name'
+    title:
+      type: label
+      label: 'Account Title'

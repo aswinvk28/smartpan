@@ -1,0 +1,9 @@
+name: Smartpan Payment
+type: module
+description: 'Enables Payment by subscription for Smartpan'
+package: Smartpan_Payment
+version: VERSION
+dependencies:
+  - braintree
+  - user_subscription
+core: 8.x

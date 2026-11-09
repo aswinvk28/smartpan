@@ -1,0 +1,23 @@
+id: flatui_powered
+uuid: 7fc44b0c-aec9-4760-b63b-59986f83146c
+weight: -4
+status: false
+langcode: en
+theme: flatui
+region: '-1'
+plugin: system_powered_by_block
+settings:
+  label: 'Powered by Drupal'
+  module: system
+  label_display: '0'
+  cache: -1
+visibility:
+  path:
+    visibility: 0
+    pages: ''
+  role:
+    roles: {  }
+  node_type:
+    types:
+      article: '0'
+      page: '0'

@@ -1,0 +1,9 @@
+name: Smartpan Notification
+type: module
+description: 'Enables Email Notifications and Settings for Smartpan'
+package: Smartpan_Notification
+version: VERSION
+dependencies:
+  - smartpan_payment
+  - smartpan_stock
+core: 8.x

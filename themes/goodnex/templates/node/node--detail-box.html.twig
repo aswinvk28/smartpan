@@ -1,0 +1,18 @@
+<div class="four columns">
+  <a target="_self" href="{{ content.field_detail_url) }}">
+    <div class="detail-box">
+        <div class="detail-entry">
+            <i class="detail-icon {{ content.field_detail_icon }}"></i>
+            <h5>{{ content.field_detail_caption }}</h5>
+            <p>
+                {{ content.field_detail_info }}
+            </p>
+        </div><!--/ .detail-entry-->
+    <div 
+        data-color-state="{%- if (content.field_detail_color AND content.field_detail_color_type == 'Background') -%}#{{ content.field_detail_color }}{%- endif -%}" 
+        data-color-hover="{%- if (content.field_detail_color AND content.field_detail_color_type == 'Hover') -%}#{%- content.field_detail_color -%}{%- endif -%}" 
+        class="transform">
+    </div>
+    </div><!--/ .detail-box-->
+  </a>
+</div><!--/ .columns-->

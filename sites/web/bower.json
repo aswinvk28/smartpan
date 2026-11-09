@@ -1,0 +1,18 @@
+{
+  "name": "dashboard/frontend",
+  "version": "0.0.0",
+  "authors": [
+    "Aswin <aswinvk28@gmail.com>"
+  ],
+  "description": "Frontend package configuration for the Dashboard",
+  "main": "app.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

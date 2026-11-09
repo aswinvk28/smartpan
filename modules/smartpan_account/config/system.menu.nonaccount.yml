@@ -1,0 +1,5 @@
+id: nonaccount
+label: 'Non User account Holder menu'
+description: 'Links related to the non user account holder.'
+langcode: en
+locked: true

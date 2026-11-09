@@ -1,0 +1,24 @@
+<section id="comments" class="{{ classes }}" {{ attributes }}>
+
+  {%- if (content.comments && node.type != 'forum') -%}
+    {{ title_prefix }}
+    	<h6>{{ node.comment_count }} Comments</h6>
+    {{ title_suffix }}
+  {%- endif -%}
+  
+   {%- if ($content['comments'] && $node->type != 'forum') -%}
+  <div class="comments-content-wrap">
+    {{ content.comments }}
+  </div>  
+  {%- endif -%}
+
+  {%- if (content.comment_form) -%}
+  <div class="post-block post-leave-comment">
+    <section id="comment-form-wrapper">
+      <h6>Leave a comment</h6>
+      {{ content.comment_form }}
+    </section> <!-- /#comment-form-wrapper -->
+  </div>  
+  {%- endif -%}
+
+</section> <!-- /#comments -->

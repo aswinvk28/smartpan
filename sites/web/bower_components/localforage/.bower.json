@@ -1,0 +1,27 @@
+{
+  "name": "localforage",
+  "version": "0.1.1",
+  "main": [
+    "dist/localforage.min.js",
+    "dist/backbone.localforage.min.js"
+  ],
+  "ignore": [
+    ".travis.yml",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "test*",
+    "vendor/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/mozilla/localForage",
+  "_release": "0.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.1",
+    "commit": "916e764ce807a50915cf99e057a83758126d7bd6"
+  },
+  "_source": "git://github.com/mozilla/localForage.git",
+  "_target": "~0.1.0",
+  "_originalSource": "localforage"
+}

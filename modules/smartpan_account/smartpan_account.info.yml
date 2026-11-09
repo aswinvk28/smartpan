@@ -1,0 +1,7 @@
+name: SmartPan Application with Account
+type: module
+description: 'Enables the use of the application with an account registration.'
+package: SmartPan
+dependencies:
+version: VERSION
+core: 8.x

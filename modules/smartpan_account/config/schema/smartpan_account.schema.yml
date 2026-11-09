@@ -1,0 +1,13 @@
+smartpan_account.braintree_plan.*:
+  type: mapping
+  label: 'Braintree Settings'
+  mapping:
+    machineName:
+      type: string
+      label: 'Machine name'
+    type:
+      type: integer
+      label: 'Taxonomy Term ID'
+    role:
+      type: string
+      label: 'Role ID'

@@ -1,0 +1,23 @@
+smartpan_database.stock:
+  type: mapping
+  label: 'Smartpan Stock Database settings'
+  mapping:
+    partition_autodelete:
+      type: mapping
+      label: 'Auto Delete Partitions'
+      mapping:
+        stock_size:
+          type: boolean
+          label: 'Stock Size'
+        stock_history:
+          type: boolean
+          label: 'Stock History'
+        stock_investor:
+          type: boolean
+          label: 'Stock Investor'
+        industry_rank:
+          type: boolean
+          label: 'Industry Rank'
+        market_rank:
+          type: boolean
+          label: 'Market Rank'

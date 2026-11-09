@@ -1,0 +1,89 @@
+<?php
+
+function product_subscription_schema() {
+    $schema['smartpan_plan'] = array(
+        'description' => 'Stores the types of plans',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true, 
+                'description' => 'Primary Key: Unique plan ID.',
+                'size' => 'tiny',
+                'unsigned' => true),
+            'uuid' => array(
+                'description' => 'Unique Key: Universally unique identifier for this entity.',
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => FALSE,
+                'default' => NULL),
+            'plan_machine_name' => array(
+                'type' => 'varchar',
+                'length' => 64,
+                'not null' => TRUE),
+            'title' => array(
+                'type' => 'varchar',
+                'not null' => true,
+                'description' => 'Title for the plan.',
+                'length' => 128),
+            'type' => array(
+                'type' => 'int',
+                'not null' => true,
+                'unsigned' => true,
+                'description' => 'Type of the plan such as: free-trial, basic, normal or premium, obtained from taxonomy',
+                'size' => 'tiny'),
+            'price' => array(
+                'type' => 'float',
+                'mysql_type' => 'float(8,2)',
+                'description' => 'Pricing for the plan in own exchange.',
+                'unsigned' => true,
+                'not null' => TRUE,
+                'default' => 0.00),
+            'duration' => array(
+                'type' => 'int',
+                'description' => 'Duration of the plan: week, month, year, obtained from taxonomy',
+                'not null' => TRUE,
+                'unsigned' => true,
+                'size' => 'tiny'),
+            'currency' => array(
+                'description' => 'The ISO currency code for the order.',
+                'type' => 'char',
+                'length' => 5,
+                'not null' => TRUE,
+                'default' => ''),
+            'status' => array(
+                'type' => 'int',
+                'size' => 'tiny',
+                'description' => 'A boolean indicating the status of the plan: active or not active.',
+                'unsigned' => true,
+                'not null' => true,
+                'default' => 0),
+            'highlight' => array(
+                'type' => 'int',
+                'size' => 'tiny',
+                'description' => 'A boolean indicating whether the plan is highlighted.',
+                'unsigned' => true,
+                'not null' => true,
+                'default' => 0),
+            'description' => array(
+                'type' => 'text',
+                'size' => 'medium',
+                'not null' => false,
+                'default' => NULL),
+            'validity' => array(
+                'type' => 'int',
+                'size' => 'tiny',
+                'not null' => true,
+                'default' => 1)
+        ),
+        'unique keys' => array(
+          'uuid' => array('uuid')
+        ),
+        'indexes' => array(
+          'status' => array('status')
+        ),
+        'primary key' => array('id')
+    );
+    return $schema;
+}
+
+?>

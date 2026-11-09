@@ -1,0 +1,403 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Bartik theme.
+ */
+
+require_once DRUPAL_ROOT . base_path() . path_to_theme() . '/preprocess/preprocess.php';
+require_once DRUPAL_ROOT . base_path() . path_to_theme() . '/theme/theme.php';
+require_once DRUPAL_ROOT . base_path() . path_to_theme() . '/container/FlatUI.php';
+
+/**
+ * Implements hook_library_info().
+ */
+function flatui_library_info() {
+  $path = drupal_get_path('theme', 'flatui');
+  
+  $libraries['dashboard_css'] = array(
+      'version' => \DRUPAL::VERSION,
+      'css' => array(
+//          'sites/web/bower_components/fatiherikli/backbone-autocomplete/src/backbone.autocomplete-min.css' => array(
+//              'group' => CSS_SKIN,
+//              'every_page' => FALSE,
+//              'scope' => 'header',
+//              'type' => 'file',
+//              'cache' => true
+//          ),
+          'sites/web/bower_components/gridster/dist/jquery.gridster.min.css' => array(
+              'group' => CSS_SKIN,
+              'every_page' => FALSE,
+              'scope' => 'header',
+              'type' => 'file',
+              'cache' => true,
+              'weight' => -100
+          )
+      )
+  );
+  
+//  $libraries['flatui_select'] = array(
+//      'version' => \DRUPAL::VERSION,
+//      'js' => array(
+//          $path . '/packages/Flat-UI/js/bootstrap-select.js' => array(
+//              'group' => JS_THEME,
+//              'every_page' => true,
+//              'scope' => 'footer',
+//              'type' => 'file',
+//              'cache' => true
+//          )
+//      )
+//  );
+  
+//  $libraries['flatui_checkbox'] = array(
+//      'version' => \DRUPAL::VERSION,
+//      'js' => array(
+//          $path . '/packages/Flat-UI/js/flatui-checkbox.js' => array(
+//              'group' => JS_THEME,
+//              'every_page' => false,
+//              'scope' => 'footer',
+//              'type' => 'file',
+//              'cache' => true
+//          )
+//      )
+//  );
+  
+//  $libraries['flatui_css'] = array(
+//      'version' => \DRUPAL::VERSION,
+//      'css' => array(
+//          $path . '/packages/Flat-UI/css/flat-ui.css' => array(
+//              'group' => CSS_SKIN,
+//              'every_page' => true,
+//              'scope' => 'header',
+//              'type' => 'file',
+//              'cache' => true
+//          )
+//      )
+//  );
+  
+  $libraries['jquery_placeholder'] = array(
+      'version' => \DRUPAL::VERSION,
+      'js' => array(
+          $path . '/packages/Flat-UI/js/jquery.placeholder.js' => array(
+              'group' => JS_THEME,
+              'every_page' => true,
+              'scope' => 'footer',
+              'type' => 'file',
+              'cache' => true
+          )
+      )
+  );
+  
+  $libraries['bootstrap_js'] = array(
+      'version' => \DRUPAL::VERSION,
+      'js' => array(
+          $path . '/packages/Flat-UI/js/bootstrap.min.js' => array(
+              'group' => JS_THEME,
+              'every_page' => true,
+              'scope' => 'footer',
+              'type' => 'file',
+              'cache' => true
+          )
+      )
+  );
+  
+  $libraries['flatui'] = array(
+      'version' => \DRUPAL::VERSION,
+      'js' => array(
+          $path . '/js/flatui.js' => array(
+              'group' => JS_THEME,
+              'every_page' => true,
+              'scope' => 'footer',
+              'type' => 'file',
+              'cache' => true
+          )
+      )
+  );
+  
+  $libraries['bootstrap'] = array(
+      'version' => \DRUPAL::VERSION,
+      'css' => array(
+          $path . '/packages/Flat-UI/bootstrap/css/bootstrap.min.css' => array(
+              'group' => CSS_LAYOUT,
+              'every_page' => TRUE,
+              'scope' => 'header',
+              'type' => 'file',
+              'cache' => true
+          ),
+          $path . '/packages/Flat-UI/bootstrap/css/style.min.css' => array(
+              'group' => CSS_SKIN,
+              'every_page' => TRUE,
+              'scope' => 'header',
+              'type' => 'file',
+              'cache' => true
+          )
+      )
+  );
+  
+  $libraries['dashboard_js'] = array(
+      'version' => \DRUPAL::VERSION,
+      'js' => array(
+//          'sites/web/bower_components/fatiherikli/backbone-autocomplete/src/backbone.autocomplete.js' => array(
+//              'group' => JS_THEME,
+//              'every_page' => FALSE,
+//              'scope' => 'header',
+//              'type' => 'file',
+//              'cache' => true
+//          ),
+          'sites/web/bower_components/gridster/dist/jquery.gridster.js' => array(
+              'group' => JS_THEME,
+              'every_page' => true,
+              'scope' => 'header',
+              'type' => 'file',
+              'cache' => true
+          )
+      )
+  );
+  
+  $libraries['replacement'] = array(
+      'version' => \DRUPAL::VERSION,
+      'js' => array(
+          'sites/web/bower_components/jquery/dist/jquery.min.js' => array(
+              'group' => JS_LIBRARY,
+              'every_page' => TRUE,
+              'scope' => 'header',
+              'type' => 'file',
+              'cache' => true,
+              'weight' => -30
+          )
+      )
+  );
+  
+  return $libraries;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ */
+function flatui_preprocess_node(&$variables) {
+  // Remove the "Add new comment" link on teasers or when the comment form is
+  // displayed on the page.
+  if ($variables['teaser'] || !empty($variables['content']['comments']['comment_form'])) {
+    unset($variables['content']['links']['comment']['#links']['comment-add']);
+  }
+}
+
+/**
+ * Implements theme_menu_tree().
+ */
+function flatui_menu_tree($variables) {
+  return '<ul class="menu clearfix">' . $variables['tree'] . '</ul>';
+}
+
+/**
+ * Implements theme_menu_tree__shortcut_default() {
+ */
+function flatui_menu_tree__shortcut_default($variables) {
+  return '<ul class="menu">' . $variables['tree'] . '</ul>';
+}
+
+/**
+ * Implements theme_field__field_type().
+ */
+function flatui_field__taxonomy_term_reference($variables) {
+  $output = '';
+
+  // Render the label either as a visible list or make it visually hidden for accessibility.
+  $hidden_class = empty($variables['label_hidden']) ? '' : ' visually-hidden';
+  $output .= '<h3 class="field-label' . $hidden_class . '">' . $variables['label'] . ': </h3>';
+
+  // Render the items.
+  $output .= ($variables['element']['#label_display'] == 'inline') ? '<ul class="links inline">' : '<ul class="links">';
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<li class="taxonomy-term-reference-' . $delta . '"' . $variables['item_attributes'][$delta] . '>' . drupal_render($item) . '</li>';
+  }
+  $output .= '</ul>';
+
+  // Render the top-level DIV.
+  $variables['attributes']['class'][] = 'clearfix';
+  $output = '<div ' . $variables['attributes'] . '>' . $output . '</div>';
+
+  return $output;
+}
+
+/**
++ * Helper function for handling the site name and slogan.
++ */
+function _flatui_process_page(&$variables) {
+  $site_config = \Drupal::config('system.site');
+  // Always print the site name and slogan, but if they are toggled off, we'll
+  // just hide them visually.
+  $variables['hide_site_name']   = theme_get_setting('features.name') ? FALSE : TRUE;
+  $variables['hide_site_slogan'] = theme_get_setting('features.slogan') ? FALSE : TRUE;
+  if ($variables['hide_site_name']) {
+    // If toggle_name is FALSE, the site_name will be empty, so we rebuild it.
+    $variables['site_name'] = check_plain($site_config->get('name'));
+  }
+  if ($variables['hide_site_slogan']) {
+    // If toggle_site_slogan is FALSE, the site_slogan will be empty, so we rebuild it.
+    $variables['site_slogan'] = filter_xss_admin($site_config->get('slogan'));
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function flatui_theme($existing, $type, $theme, $path) {
+    $new = array(
+        'menu_local_tasks' => array(
+            'render element' => 'element',
+            'template' => 'menu-local-tasks',
+            'path' => $path . '/templates/menu'
+        ),
+        'links__system_secondary_menu' => array(
+            'render element' => 'element',
+            'template' => 'secondary-menu',
+            'path' => $path . '/templates/menu'
+        ),
+        'links__system_main_menu' => array(
+            'render element' => 'element',
+            'template' => 'main-menu',
+            'path' => $path . '/templates/menu'
+        ),
+        'dashboard' => array(
+            'render element' => 'element',
+            'template' => 'dashboard',
+            'path' => $path . '/templates/dashboard'
+        ),
+        'form_autocomplete' => array(
+            'render element' => 'element',
+            'template' => 'form-autocomplete',
+            'path' => $path . '/templates/forms'
+        ),
+        'plans_and_pricing' => array(
+            'render element' => 'element'
+        ),
+        'ajax_field' => array(
+            'render element' => 'element'
+        ),
+        'tabs' => array(
+            'render element' => 'element',
+            'path' => $path . '/templates/style',
+            'template' => 'tabs'
+        ),
+        'list_item_view' => array(
+            'render element' => 'element'
+        ),
+        'link_button' => array(
+            'render element' => 'element'
+        ),
+        'form_inline' => array(
+            'render element' => 'element'
+        ),
+        'login_container' => array(
+            'render element' => 'element'
+        )
+    );
+    return $new;
+}
+
+function flatui_message_mapper($type) {
+    static $messageMap;
+    if(!isset($messageMap)) {
+        $messageMap = array(
+            'error' => 'Warning',
+            'status' => 'Information',
+            'warning' => 'Warning',
+            'create' => 'Created',
+            'update' => 'Updated',
+            'add' => 'Added',
+            'load' => 'Result'
+        );
+    }
+    return $messageMap[$type];
+}
+
+function flatui_message_class_mapper($type) {
+    static $messageMap;
+    if(!isset($messageMap)) {
+        $messageMap = array(
+            'error' => 'alert-error',
+            'warning' => 'alert-warning',
+            'status' => 'alert-success',
+            'create' => 'alert-success',
+            'update' => 'alert-success',
+            'add' => 'alert-success',
+            'load' => 'alert-info'
+        );
+    }
+    return $messageMap[$type];
+}
+
+function flatui_plan_duration_mapper($duration) {
+    static $durationMap;
+    if(!isset($durationMap)) {
+        $durationMap = array(
+            'month' => 'Per Month',
+            'day' => 'Per Day',
+            'week' => 'Per Week'
+        );
+    }
+    return $durationMap[$duration];
+}
+
+function flatui_plan_button_mapper($member = false, $plan, $planController, $currentPlan = NULL, $currentSubscription = NULL, $subscriptionType = 'free-trial', $planType = 'free-trial') {
+    $value = array(
+        '#type' => 'html_tag',
+        '#tag' => 'a',
+        '#attributes' => array(
+            
+        )
+    );
+    
+    if(!empty($currentPlan)) {
+        $value = array(
+            '#type' => 'html_tag',
+            '#tag' => 'div',
+            '#attributes' => array(
+                'class' => array('well', 'btn')
+            )
+        );
+    }
+    
+    $popular = $plan->get('highlight')->value == 1;
+    $hasFreeTrial = !empty($plan->freeTrial);
+    
+    if($popular && $value['#tag'] == 'a') {
+        $value['#attributes']['class'] = array('btn', 'btn-info');
+    } elseif($value['#tag'] == 'a') {
+        $value['#attributes']['class'] = array('btn', 'btn-inverse');
+    }
+    
+    if($member) {
+        if(!empty($currentPlan)) {
+            $subscriptionValidity = $currentSubscription->getValidity()->format('j, M Y');
+            $value['#value'] = "Current Plan, <p> Subscription ends $subscriptionValidity </p>";
+        } else {
+            $value['#attributes']['href'] = \Drupal::urlGenerator()->generateFromRoute('payment.change_plan', array('plan_machine_name' => $plan->get('plan_machine_name')->value));
+            $value['#value'] = 'Upgrade / <p> Downgrade </p>';
+        }
+    } else {
+        if($hasFreeTrial) {
+            $freeTrialPlanId = $planController->searchTrialPlanDB(array(
+                'plan_machine_name' => $plan->get('plan_machine_name')->value,
+                'price' => 0.00
+            ));
+        } else {
+            $freeTrialPlanId = $planController->searchHighlightedTrialPlanDB(array(
+                'plan_machine_name' => $plan->get('plan_machine_name')->value,
+                'price' => 0.00,
+                'highlight' => 1
+            ));
+        }
+        if(empty($freeTrialPlanId)) return '';
+        $planDB = $planController->getPlanFromDatabase();
+        $freeTrialPlanDuration = $planDB[$freeTrialPlanId]->planValidityMapping('');
+        $value['#attributes']['href'] = \Drupal::urlGenerator()->generateFromRoute('smartpan.account', array(
+            'subscription_type' => $subscriptionType,
+            'plan_type' => 'free-trial'
+        ));
+        $value['#value'] = "Start $freeTrialPlanDuration Free Trial";
+    }
+    
+    return drupal_render($value);
+}

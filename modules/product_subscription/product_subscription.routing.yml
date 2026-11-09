@@ -1,0 +1,43 @@
+product_subscription.plan_overview:
+  path: '/admin/plan/list'
+  defaults:
+    _entity_list: 'plan'
+    _title: 'Plan List'
+  requirements:
+    _permission: 'administer plans'
+    methods: 'GET'
+    
+product_subscription.plan_delete:
+  path: '/admin/plan/{plan}/delete'
+  defaults:
+    _title: 'Delete plan'
+    _entity_form: 'plan.delete'
+  requirements:
+    _permission: 'administer plans'
+    methods: 'GET'
+
+product_subscription.plan_edit:
+  path: '/admin/plan/{plan}/edit'
+  defaults:
+    _entity_form: 'plan.default'
+    _title: 'Plan Details'
+  requirements:
+    _permission: 'administer plans'
+    methods: 'GET'
+    
+product_subscription.plan_sync:
+  path: '/admin/plan/setup'
+  defaults:
+    _content: '\Drupal\product_subscription\Controller\PlanFormController::sync'
+    _title: 'Plan Sync'
+  requirements:
+    _permission: 'administer plans'
+    methods: 'GET'
+    
+#product_subscription.plan_price:
+#  path: '/plans-and-pricing'
+#  defaults: 
+#    _title: 'Plans and Pricing'
+#    _content: '\SmartPan\Bundles\CustomerBundle\Controller\PlanPageController::pricePage'
+#  requirements:
+#    _access: 'TRUE'

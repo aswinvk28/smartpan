@@ -1,0 +1,29 @@
+user_subscription.subscription_delete:
+  path: '/admin/subscription/{subscription}/delete'
+  defaults:
+    _title: 'Delete subscription'
+    _entity_form: 'subscription.delete'
+  requirements:
+    _permission: 'administer subscriptions'
+    methods: 'GET'
+    _role: 'administrator'
+    
+user_subscription.subscription_edit:
+  path: '/admin/subscription/{subscription}/edit'
+  defaults:
+    _entity_form: 'subscription.default'
+    _title: 'Edit subscription'
+  requirements:
+    _permission: 'administer subscriptions'
+    methods: 'GET'
+    _role: 'administrator'
+
+user_subscription.subscription_overview:
+  path: '/admin/subscription/list'
+  defaults:
+    _entity_list: 'subscription'
+    _title: 'Subscriptions List'
+  requirements:
+    _permission: 'administer subscriptions'
+    methods: 'GET'
+    _role: 'administrator'

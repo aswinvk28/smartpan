@@ -1,0 +1,8 @@
+braintree:
+  smartpan_qa:
+    account_name: 'smartpan_qa'
+    environment: 'qa'
+    merchant_id: 'pzxm88bnnyxrj39w'
+    public_key: '3dhgyydtfnt8rr3f'
+    private_key: 'cb634f3a19f29107acd76b9994859a42'
+    cse_key: 'MIIBCgKCAQEA3TZHe3CH6c9TtTT+PfagRW3djoKJEG5M3cfsx5PqpI06ZMjQVknbUOo1/zxj6lo1caL9qFEtldo60IwYGXDojwe1pB+RFEj9cmLlnmQWdoY3lEh08PWB2hVUVzQGXKtYpVN4DtNRiR/40ydFCKiZz53x3Ll0a21qJQuJk2RlytQIbVlEMsc9TzM3g25SEgKZhkHyMFZ0sS5jNyfnV2lMH0NhRJ7L6CMLBLzDYNTcEZ4qP2pD5UOOxHLzwu1Uj/gMh1nZrZVJ7XHtHQSaitCoRfI8OKFOdbicGDNqObAMuRST44N51/4k+wGEpKQAcVbnzOsYWxQ8crxni2uGqQTD/wIDAQAB'

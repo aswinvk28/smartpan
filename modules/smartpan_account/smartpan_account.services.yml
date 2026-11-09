@@ -1,0 +1,4 @@
+services:
+  smartpan_account.form_user_token:
+    class: SmartPan\Bundles\CustomerBundle\Manager\FormUserTokenManager
+    arguments: ['@csrf_token', '@settings', '@keyvalue.expirable']

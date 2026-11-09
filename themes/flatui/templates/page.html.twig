@@ -1,0 +1,110 @@
+<div id="page-wrapper"><div id="page" class="page">
+    <header class="header clearfix {% if is_admin %} header-admin {% endif %}">
+        <section class="container">
+            {% if logo or main_menu %}
+                <div class="header-container clearfix">
+                    {% if logo %}
+                        <div class="logo-container span5">
+                            <a href="{{ front_page }}" title="{{ 'Home'|t }}" rel="home" id="logo">
+                                <img src="{{ logo }}" alt="{{ 'Home'|t }}" />
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if site_name or site_slogan or main_menu %}
+                <div class="header-container clearfix">
+                    {% if site_name or main_menu %}
+                        <div class="navbar">
+                            <div class="navbar-inner clearfix">
+                                <div class="row-fluid column_mini">
+                                    {% if site_name %}
+                                    <ul class="unstyled span2 vertical-fluid main_menu" role="navigation">
+                                        <li class=""><a class="brand nounderline" href="{{ front_page }}">{{ site_name }}</a></li>
+                                    </ul>
+                                    {% endif %}
+                                    <div class="form-search-container span6 vertical-fluid">
+                                        <div class="row-fluid">
+                                            <div class="span9">
+                                                {{ stock_symbol_form }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if main_menu %}
+                                <div class="clearfix">
+                                    {{ main_menu }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if site_slogan %}
+                        <div {% if hide_site_slogan %} class="hide"{% endif %}>
+                            {{ site_slogan }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if tabs %}
+                <div class="tabs clearfix" role="navigation">
+                    {{ tabs }}
+                </div>
+            {% endif %}
+        </section>
+    </header>
+    {{ page.header }}
+    {% if page.featured %}
+        <aside id="featured"><div class="section clearfix">
+            {{ page.featured }}
+        </div></aside>
+    {% endif %}
+    <div class="app form-description background-sep-hash clearfix {% if is_admin %} app-admin {% endif %} {% if is_dashboard %} dark {% endif %}">
+        {# breadcrumb #}
+        <div id="messages" class="section"><div class="container status-messages">
+            {{ messages }}
+        </div></div>
+        <section id="page-container" class="container">
+            <div class="clearfix">
+                {% if title %}
+                    <div class="page-title" {{ title_attributes }}>
+                    {{ title_prefix }}
+                        <h3>{{ title }}</h3>
+                    {{ title_suffix }}
+                    </div>
+                {% endif %}
+                {% if page_description %}
+                    <div class="page-description">
+                        <p class="fsmall gray">{{ page_description }}</p>
+                    </div>
+                {% endif %}
+                {{ page.help }}
+                {% if action_links %}
+                    <ul class="action-links">
+                        {{ action_links }}
+                    </ul>
+                {% endif %}
+                {{ page.content }}
+                {{ feed_icons }}
+            </div>
+            {% if page.sidebar %}
+                <div class="column span5"><aside class="section">
+                    {{ page.sidebar }}
+                </aside></div>
+            {% endif %}
+            {% if page.sidebar_mini %}
+              <div class="column span3"><aside class="section">
+                {{ page.sidebar_mini }}
+              </aside></div>
+            {% endif %}
+            <div id="page-gridster" class="gridster row"></div>
+        </section>
+    </div>
+    {% if page.footer %}
+        <footer id="footer" role="contentinfo" class="clearfix footer {% if is_dashboard %} background-sep-hash dark {% endif %}">
+            <div class="container">
+                {{ page.footer }}
+            </div>
+        </footer>
+    {% endif %}
+</div></div>

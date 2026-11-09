@@ -1,0 +1,16 @@
+<p>Welcome to Trial dashboard !!</p>
+
+<script type="text/template" id="widget-view">
+    <li class="<%= class_name %>" data-row="<%=widget_row%>" data-col="<%=widget_col%>" data-sizex="<%=widget_sizex%>" data-sizey="<%=widget_sizey%>">
+        <header class="clearfix gridster-heading">
+            <ul class="unstyled">
+                <!--<li class="btn"><i class="icon-large icon-tags"></i></li>-->
+                <li><h5><%= widget_title %></h5></li>
+            </ul>
+        </header>
+        <article class="clearfix gridster-content2"><%= widget_content %></div>
+        <aside class="clearfix gridster-bottom">
+            <span class="pull-left gridster-move"><i class="icon-large icon-move"></i></span>
+        </aside>
+    </li>
+</script>
